@@ -63,41 +63,41 @@ class UrlHelper {
     }
 
     public static function join_url($parts, $encode=true) {
-		$url = '';
-		if (!empty($parts['scheme'])) {
-			$url .= $parts['scheme'] . ':';
+        $url = '';
+        if (!empty($parts['scheme'])) {
+            $url .= $parts['scheme'] . ':';
         }
-		if (isset($parts['host'])) {
-			$url .= '//';
-			if (isset($parts['user'])) {
-				$url .= $parts['user'];
-				if (isset($parts['pass']))
-					$url .= ':' . $parts['pass'];
-				$url .= '@';
-			}
-			if (preg_match('!^[\da-f]*:[\da-f.:]+$!ui', $parts['host'])) {
-				$url .= '[' . $parts['host'] . ']'; // IPv6
-			} else {
-				$url .= $parts['host'];				// IPv4 or name
+        if (isset($parts['host'])) {
+            $url .= '//';
+            if (isset($parts['user'])) {
+                $url .= $parts['user'];
+                if (isset($parts['pass']))
+                    $url .= ':' . $parts['pass'];
+                $url .= '@';
             }
-			if (isset($parts['port'])) {
-				$url .= ':' . $parts['port'];
+            if (preg_match('!^[\da-f]*:[\da-f.:]+$!ui', $parts['host'])) {
+                $url .= '[' . $parts['host'] . ']';
+            } else {
+                $url .= $parts['host'];
             }
-			if (!empty($parts['path']) && $parts['path'][0] != '/') {
-				$url .= '/';
+            if (isset($parts['port'])) {
+                $url .= ':' . $parts['port'];
             }
-		}
-		if (!empty($parts['path'])) {
-			$url .= $parts['path'];
+            if (!empty($parts['path']) && $parts['path'][0] != '/') {
+                $url .= '/';
+            }
         }
-		if (isset($parts['query']) && strlen($parts['query']) > 0) {
-			$url .= '?' . $parts['query'];
+        if (!empty($parts['path'])) {
+            $url .= $parts['path'];
         }
-		if (isset($parts['fragment'])) {
-			$url .= '#' . $parts['fragment'];
+        if (isset($parts['query']) && strlen($parts['query']) > 0) {
+            $url .= '?' . $parts['query'];
+        }
+        if (isset($parts['fragment'])) {
+            $url .= '#' . $parts['fragment'];
         }
 
         return $url;
-	}
+    }
 
 }
