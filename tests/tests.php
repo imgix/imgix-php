@@ -10,12 +10,10 @@ class ImgixTest extends PHPUnit_Framework_TestCase {
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage UrlBuilder requires at least one domain
      */
-	public function testURLBuilderRaisesExceptionOnNoDomains() {
-		//exception.expect(IllegalArgumentException.class);
-		//URLBuilder ub = new URLBuilder(new String[] {});
+    public function testURLBuilderRaisesExceptionOnNoDomains() {
         $domains = array();
         $ub = new URLBuilder($domains);
-	}
+    }
 
     public function testHelperBuildSignedURLWithHashMapParams() {
         $params = array("w" => 500);
@@ -25,20 +23,20 @@ class ImgixTest extends PHPUnit_Framework_TestCase {
     }
 
 
-	public function testHelperBuildSignedURLWithHashSetterParams() {
+    public function testHelperBuildSignedURLWithHashSetterParams() {
         $uh = new URLHelper("securejackangers.imgix.net", "chester.png", "http", "Q61NvXIy");
-		$uh->setParameter("w", 500);
+        $uh->setParameter("w", 500);
         $this->assertEquals($uh->getURL(), "http://securejackangers.imgix.net/chester.png?w=500&s=0ddf97bf1a266a1da6c30c6ce327f917");
-	}
+    }
 
-	public function testHelperBuildSignedURLWithHashSetterParamsHttps() {
+    public function testHelperBuildSignedURLWithHashSetterParamsHttps() {
         $uh = new URLHelper("securejackangers.imgix.net", "chester.png", "https", "Q61NvXIy");
-		$uh->setParameter("w", 500);
+        $uh->setParameter("w", 500);
         $this->assertEquals($uh->getURL(), "https://securejackangers.imgix.net/chester.png?w=500&s=0ddf97bf1a266a1da6c30c6ce327f917");
-	}
+    }
 
-	public function testUrlBuilderCycleShard() {
-		// generate a url for the number of domains in use ensure they're cycled through...
+    public function testUrlBuilderCycleShard() {
+        // generate a url for the number of domains in use ensure they're cycled through...
 
         $domains = array("jackangers.imgix.net", "jackangers2.imgix.net", "jackangers3.imgix.net");
 
