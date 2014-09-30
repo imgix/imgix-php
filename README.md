@@ -12,6 +12,25 @@ The library itself has no external dependencies. Although if you want to run tes
 
 `phpunit --bootstrap src/autoload.php tests/tests.php`
 
+Installation
+------------
+
+### Standalone
+
+Just copy the files to your project, and include the `src/autoload.php` file.
+
+### Using Composer
+
+Define the following requirement in your `composer.json` file:
+
+    {
+        "require": {
+            "imgix/imgix-php": "dev-master"
+        }
+    }
+
+And include the global `vendor/autoload.php` autoloader.
+
 Basic Usage
 -----------
 
