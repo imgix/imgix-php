@@ -48,7 +48,7 @@ class UrlHelper {
             if ($query) {
                 $query .= "&s=" . $sig;
             } else {
-                $query = "?s=" . $sig;
+                $query = "s=" . $sig;
             }
         }
 
