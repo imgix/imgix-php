@@ -43,7 +43,7 @@ class UrlBuilder {
         $scheme = $this->useHttps ? "https" : "http";
 
         if ($this->shardStratgy === ShardStrategy::CRC) {
-            $index = crc32($path) % sizeof($this->domains);
+            $index = self::unsigned_crc32($path) % sizeof($this->domains);
             $domain = $this->domains[$index];
         } else if ($this->shardStratgy === ShardStrategy::CYCLE) {
             $this->shardCycleNextIndex = ($this->shardCycleNextIndex + 1) % sizeof($this->domains);
@@ -55,5 +55,11 @@ class UrlBuilder {
         $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
 
         return $uh->getURL();
+    }
+
+    // force unsigned int since 32-bit systems can return a signed integer
+    // see warning here: http://php.net/manual/en/function.crc32.php
+    public static function unsigned_crc32($v) {
+        return intval(sprintf("%u", crc32($v)));
     }
 }
