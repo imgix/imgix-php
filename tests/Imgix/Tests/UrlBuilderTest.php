@@ -39,7 +39,7 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
         $params = array("w" => 100, "h" => 100);
         $url = $builder->createURL("bridge.png", $params);
 
-        $this->assertEquals($url, "http://demos.imgix.net/bridge.png?h=100&w=100");
+        $this->assertEquals("http://demos.imgix.net/bridge.png?h=100&w=100", $url);
     }
 
     public function testExamplePlainHttps() {
@@ -49,7 +49,7 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
         $params = array("w" => 100, "h" => 100);
         $url = $builder->createURL("bridge.png", $params);
 
-        $this->assertEquals($url, "https://demos.imgix.net/bridge.png?h=100&w=100");
+        $this->assertEquals("https://demos.imgix.net/bridge.png?h=100&w=100", $url);
     }
 
     public function testExamplePlainSecure() {
@@ -58,7 +58,31 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
         $params = array("w" => 100, "h" => 100);
         $url = $builder->createURL("bridge.png", $params);
 
-        $this->assertEquals($url, "http://demos.imgix.net/bridge.png?h=100&w=100&s=bb8f3a2ab832e35997456823272103a4");
+        $this->assertEquals("http://demos.imgix.net/bridge.png?h=100&w=100&s=bb8f3a2ab832e35997456823272103a4", $url);
+    }
+
+    public function testWithFullyQualifiedUrl() {
+        $builder = new UrlBuilder("demos.imgix.net", true);
+        $builder->setSignKey("test1234");
+        $url = $builder->createUrl("http://media.giphy.com/media/jCMq0p94fgBIk/giphy.gif");
+
+        $this->assertEquals("https://demos.imgix.net/http%3A%2F%2Fmedia.giphy.com%2Fmedia%2FjCMq0p94fgBIk%2Fgiphy.gif?&s=ffc3359566fe1dc6445ad17d17b98951", $url);
+    }
+
+    public function testWithFullyQualifiedUrlWithSpaces() {
+        $builder = new UrlBuilder("demos.imgix.net", true);
+        $builder->setSignKey("test1234");
+        $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png");
+
+        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png?&s=f6a4e1504af365564014564f1d7e13de", $url);
+    }
+
+    public function testWithFullyQualifiedUrlWithParams() {
+        $builder = new UrlBuilder("demos.imgix.net", true);
+        $builder->setSignKey("test1234");
+        $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png?some=chill&params=1");
+
+        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png%3Fsome%3Dchill%26params%3D1?&s=259b9ca6206721752ad7a3ce50f08dd2", $url);
     }
   }
 ?>

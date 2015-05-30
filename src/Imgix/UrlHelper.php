@@ -1,7 +1,7 @@
 <?php
 
 namespace Imgix;
- 
+
 class UrlHelper {
 
     private $domain;
@@ -12,7 +12,8 @@ class UrlHelper {
 
     public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
         $this->domain = $domain;
-        $this->path = substr($path, 0, 1) !== "/" ? ("/" . $path) : $path;
+        $this->path = substr($path, 0, 4) === "http" ? urlencode($path) : $path;
+        $this->path = substr($this->path, 0, 1) !== "/" ? ("/" . $this->path) : $this->path;
         $this->scheme = $scheme;
         $this->signKey = $signKey;
         $this->params = $params;
@@ -42,7 +43,7 @@ class UrlHelper {
         $query = join("&", $queryPairs);
 
         if ($this->signKey) {
-            $delim = $query === "" ? "" : "?";
+            $delim = "?";
             $toSign = $this->signKey . $this->path . $delim . $query;
             $sig = md5($toSign);
             if ($query) {
@@ -54,7 +55,7 @@ class UrlHelper {
 
         $url_parts = array('scheme' => $this->scheme, 'host' => $this->domain, 'path' => $this->path, 'query' => $query);
 
-        return self::join_url($url_parts);
+        return self::joinURL($url_parts);
     }
 
     public static function encodeURIComponent($str) {
@@ -62,42 +63,13 @@ class UrlHelper {
         return strtr(rawurlencode($str), $revert);
     }
 
-    public static function join_url($parts, $encode=true) {
-        $url = '';
-        if (!empty($parts['scheme'])) {
-            $url .= $parts['scheme'] . ':';
-        }
-        if (isset($parts['host'])) {
-            $url .= '//';
-            if (isset($parts['user'])) {
-                $url .= $parts['user'];
-                if (isset($parts['pass']))
-                    $url .= ':' . $parts['pass'];
-                $url .= '@';
-            }
-            if (preg_match('!^[\da-f]*:[\da-f.:]+$!ui', $parts['host'])) {
-                $url .= '[' . $parts['host'] . ']';
-            } else {
-                $url .= $parts['host'];
-            }
-            if (isset($parts['port'])) {
-                $url .= ':' . $parts['port'];
-            }
-            if (!empty($parts['path']) && $parts['path'][0] != '/') {
-                $url .= '/';
-            }
-        }
-        if (!empty($parts['path'])) {
-            $url .= $parts['path'];
-        }
-        if (isset($parts['query']) && strlen($parts['query']) > 0) {
-            $url .= '?' . $parts['query'];
-        }
-        if (isset($parts['fragment'])) {
-            $url .= '#' . $parts['fragment'];
+    public static function joinURL($parts) {
+
+        // imgix idiosyncracy for signing URLs when only the signature exists. Our query string must begin with '?&s='
+        if (substr($parts['query'], 0, 2) === "s=") {
+            $parts['query'] = "&" . $parts['query'];
         }
 
-        return $url;
+        return http_build_url($parts);
     }
-
 }
