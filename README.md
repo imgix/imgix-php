@@ -1,5 +1,7 @@
 ![imgix logo](https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=200&h=200)
 
+[![Build Status](https://travis-ci.org/imgix/imgix-php.png?branch=master)](https://travis-ci.org/imgix/imgix-php)
+
 A PHP client library for generating URLs with imgix. imgix is a high-performance
 distributed image processing service. More information can be found at
 [http://www.imgix.com](http://www.imgix.com).  
