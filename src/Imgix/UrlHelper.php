@@ -1,7 +1,7 @@
 <?php
 
 namespace Imgix;
- 
+
 class UrlHelper {
 
     private $domain;
@@ -12,7 +12,8 @@ class UrlHelper {
 
     public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
         $this->domain = $domain;
-        $this->path = substr($path, 0, 1) !== "/" ? ("/" . $path) : $path;
+        $this->path = substr($path, 0, 4) === "http" ? urlencode($path) : $path;
+        $this->path = substr($this->path, 0, 1) !== "/" ? ("/" . $this->path) : $this->path;
         $this->scheme = $scheme;
         $this->signKey = $signKey;
         $this->params = $params;
@@ -42,7 +43,7 @@ class UrlHelper {
         $query = join("&", $queryPairs);
 
         if ($this->signKey) {
-            $delim = $query === "" ? "" : "?";
+            $delim = "?";
             $toSign = $this->signKey . $this->path . $delim . $query;
             $sig = md5($toSign);
             if ($query) {
@@ -62,6 +63,7 @@ class UrlHelper {
         return strtr(rawurlencode($str), $revert);
     }
 
+    // TODO: This is almost entirely garbage. We should not be manually building URLs
     public static function join_url($parts, $encode=true) {
         $url = '';
         if (!empty($parts['scheme'])) {
@@ -91,7 +93,11 @@ class UrlHelper {
             $url .= $parts['path'];
         }
         if (isset($parts['query']) && strlen($parts['query']) > 0) {
-            $url .= '?' . $parts['query'];
+            if (substr($parts['query'], 0, 2) === "s=") {
+                $url .= '?&' . $parts['query']; // imgix idiosyncracy for signing URLs when only the signature exists. Our query string must begin with '?&s='
+            } else {
+                $url .= '?' . $parts['query'];
+            }
         }
         if (isset($parts['fragment'])) {
             $url .= '#' . $parts['fragment'];
