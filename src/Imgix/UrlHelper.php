@@ -34,10 +34,14 @@ class UrlHelper {
     }
 
     public function getURL() {
-        ksort($this->params);
         $queryPairs = array();
-        foreach ($this->params as $k => $v) {
-            $queryPairs[] = $k . "=" . self::encodeURIComponent($v);
+        
+        if ($this->params) {
+            ksort($this->params);
+            
+            foreach ($this->params as $k => $v) {
+                $queryPairs[] = $k . "=" . self::encodeURIComponent($v);
+            }
         }
 
         $query = join("&", $queryPairs);
