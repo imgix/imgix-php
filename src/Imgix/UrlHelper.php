@@ -35,12 +35,12 @@ class UrlHelper {
 
     public function getURL() {
         $queryPairs = array();
-        
+
         if ($this->params) {
             ksort($this->params);
-            
+
             foreach ($this->params as $k => $v) {
-                $queryPairs[] = $k . "=" . self::encodeURIComponent($v);
+                $queryPairs[] = rawurlencode($k) . "=" . rawurlencode($v);
             }
         }
 
@@ -62,18 +62,18 @@ class UrlHelper {
         return self::joinURL($url_parts);
     }
 
-    public static function encodeURIComponent($str) {
-        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
-        return strtr(rawurlencode($str), $revert);
-    }
-
-    public static function joinURL($parts) {
-
+    private static function joinURL($parts) {
         // imgix idiosyncracy for signing URLs when only the signature exists. Our query string must begin with '?&s='
         if (substr($parts['query'], 0, 2) === "s=") {
             $parts['query'] = "&" . $parts['query'];
         }
 
-        return http_build_url($parts);
+        $url = $parts['scheme'] . '://' . $parts['host'] . $parts['path'];
+
+        if ($parts['query']) {
+            $url .= '?' . $parts['query'];
+        }
+
+        return $url;
     }
 }
