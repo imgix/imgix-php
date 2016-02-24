@@ -45,15 +45,17 @@ class UrlHelper {
         }
 
         $query = join("&", $queryPairs);
+        if ($query) {
+            $query = '?' . $query;
+        }
 
         if ($this->signKey) {
-            $delim = "?";
-            $toSign = $this->signKey . $this->path . $delim . $query;
+            $toSign = $this->signKey . $this->path . $query;
             $sig = md5($toSign);
             if ($query) {
                 $query .= "&s=" . $sig;
             } else {
-                $query = "s=" . $sig;
+                $query = "?s=" . $sig;
             }
         }
 
@@ -63,16 +65,7 @@ class UrlHelper {
     }
 
     private static function joinURL($parts) {
-        // imgix idiosyncracy for signing URLs when only the signature exists. Our query string must begin with '?&s='
-        if (substr($parts['query'], 0, 2) === "s=") {
-            $parts['query'] = "&" . $parts['query'];
-        }
-
-        $url = $parts['scheme'] . '://' . $parts['host'] . $parts['path'];
-
-        if ($parts['query']) {
-            $url .= '?' . $parts['query'];
-        }
+        $url = $parts['scheme'] . '://' . $parts['host'] . $parts['path'] . $parts['query'];
 
         return $url;
     }
