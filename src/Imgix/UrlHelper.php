@@ -39,8 +39,14 @@ class UrlHelper {
         if ($this->params) {
             ksort($this->params);
 
-            foreach ($this->params as $k => $v) {
-                $queryPairs[] = rawurlencode($k) . "=" . rawurlencode($v);
+            foreach ($this->params as $key => $val) {
+                if (substr($key, -2) == '64') {
+                    $encodedVal = self::base64url_encode($val);
+                } else {
+                    $encodedVal = rawurlencode($val);
+                }
+
+                $queryPairs[] = rawurlencode($key) . "=" . $encodedVal;
             }
         }
 
@@ -62,6 +68,10 @@ class UrlHelper {
         $url_parts = array('scheme' => $this->scheme, 'host' => $this->domain, 'path' => $this->path, 'query' => $query);
 
         return self::joinURL($url_parts);
+    }
+
+    private static function base64url_encode($data) {
+      return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
     private static function joinURL($parts) {

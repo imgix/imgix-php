@@ -61,6 +61,30 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("http://demos.imgix.net/bridge.png?h=100&w=100&s=bb8f3a2ab832e35997456823272103a4", $url);
     }
 
+    public function testParamKeysAreEscaped() {
+        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $params = array("hello world" => "interesting");
+        $url = $builder->createURL("demo.png", $params);
+
+        $this->assertEquals("https://demo.imgix.net/demo.png?hello%20world=interesting", $url);
+    }
+
+    public function testParamValuesAreEscaped() {
+        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $params = array("hello_world" => '/foo"><script>alert("hacked")</script><');
+        $url = $builder->createURL("demo.png", $params);
+
+        $this->assertEquals("https://demo.imgix.net/demo.png?hello_world=%2Ffoo%22%3E%3Cscript%3Ealert%28%22hacked%22%29%3C%2Fscript%3E%3C", $url);
+    }
+
+    public function testBase64ParamVariantsAreBase64Encoded() {
+        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $params = array("txt64" => 'I cannøt belîév∑ it wors! 😱');
+        $url = $builder->createURL("~text", $params);
+
+        $this->assertEquals("https://demo.imgix.net/~text?txt64=SSBjYW5uw7h0IGJlbMOuw6l24oiRIGl0IHdvcu-jv3MhIPCfmLE", $url);
+    }
+
     public function testWithFullyQualifiedUrl() {
         $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
         $builder->setSignKey("test1234");
