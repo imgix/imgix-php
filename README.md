@@ -9,10 +9,7 @@ distributed image processing service. More information can be found at
 
 ## Dependencies
 
-
-The library itself has one external dependency, [http_build_url](https://github.com/jakeasmith/http_build_url), for environments without pect_http. If you use the Standalone installation, you will need to include this file.
-
-Tests also have a few external dependencies as well. To install those:
+The tests have a few external dependencies. To install those:
 
 ```bash
 phpunit --bootstrap src/autoload.php tests/tests.php
@@ -22,7 +19,7 @@ phpunit --bootstrap src/autoload.php tests/tests.php
 
 ### Standalone
 
-Just copy the files to your project, and include the `src/autoload.php` file. You will also need to install [http_build_url](https://github.com/jakeasmith/http_build_url) within your project. We recommend using Composer if at all possible.
+Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
 
 ### Using Composer
 
