@@ -77,6 +77,15 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("https://demo.imgix.net/demo.png?hello_world=%2Ffoo%22%3E%3Cscript%3Ealert%28%22hacked%22%29%3C%2Fscript%3E%3C", $url);
     }
 
+    public function testZeroValue() {
+        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+
+        $params = array("foo" => 0);
+        $url = $builder->createURL("bridge.png", $params);
+
+        $this->assertEquals("https://demos.imgix.net/bridge.png?foo=0", $url);
+    }
+
     public function testBase64ParamVariantsAreBase64Encoded() {
         $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
         $params = array("txt64" => 'I cannøt belîév∑ it wors! 😱');
