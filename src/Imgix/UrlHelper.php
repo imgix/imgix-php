@@ -12,7 +12,7 @@ class UrlHelper {
 
     public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
         $this->domain = $domain;
-        $this->path = substr($path, 0, 4) === "http" ? urlencode($path) : $path;
+        $this->path = substr($path, 0, 4) === "http" ? rawurlencode($path) : $path;
         $this->path = substr($this->path, 0, 1) !== "/" ? ("/" . $this->path) : $this->path;
         $this->scheme = $scheme;
         $this->signKey = $signKey;
