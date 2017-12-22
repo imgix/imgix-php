@@ -12,7 +12,7 @@ distributed image processing service. More information can be found at
 The tests have a few external dependencies. To install those:
 
 ```bash
-phpunit --bootstrap src/autoload.php tests/tests.php
+phpunit --bootstrap src/autoload.php tests/
 ```
 
 ## Installation
