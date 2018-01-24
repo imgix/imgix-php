@@ -126,5 +126,21 @@ class UrlBuilderTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
     }
+
+    public function testRawEncodePath() {
+        $builder    = new UrlBuilder("example.com");
+        $path       = "https://example.com/~.jpg";
+        $url        = $builder->createURL($path, [], true);
+
+        $this->assertContains('~.jpg', $url);
+    }
+
+    public function testNoRawEncodePath() {
+        $builder    = new UrlBuilder("example.com");
+        $path       = "https://example.com/~.jpg";
+        $url        = $builder->createURL($path);
+
+        $this->assertContains('%7E.jpg', $url);
+    }
   }
 ?>
