@@ -10,13 +10,21 @@ class UrlHelper {
     private $signKey;
     private $params;
 
-    public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
+    public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array(), $rawEncodePath = false) {
         $this->domain = $domain;
-        $this->path = substr($path, 0, 4) === "http" ? urlencode($path) : $path;
-        $this->path = substr($this->path, 0, 1) !== "/" ? ("/" . $this->path) : $this->path;
+        $this->path = $this->formatPath( $path, $rawEncodePath );
         $this->scheme = $scheme;
         $this->signKey = $signKey;
         $this->params = $params;
+    }
+
+    public function formatPath($path, $rawUrlEncode )
+    {
+        if (0 === strpos($path, "http"))
+            $path = $rawUrlEncode ? rawurlencode($path) : urlencode($path);
+
+        $path = ($path[0] === '/' ? '' : '/') . $path;
+        return $path;
     }
 
     public function setParameter($key, $value) {
