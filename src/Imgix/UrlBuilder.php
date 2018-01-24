@@ -66,6 +66,6 @@ class UrlBuilder {
     // force unsigned int since 32-bit systems can return a signed integer
     // see warning here: http://php.net/manual/en/function.crc32.php
     public static function unsigned_crc32($v) {
-        return intval(sprintf("%u", crc32($v)));
+        return (int)sprintf( "%u", crc32($v));
     }
 }
