@@ -2,6 +2,8 @@
 
 use Imgix\UrlHelper;
 
+require_once 'PHPUnit/Autoload.php';
+
 class UrlHelperTest extends PHPUnit_Framework_TestCase {
 
     public function testHelperBuildSignedURLWithHashMapParams() {
