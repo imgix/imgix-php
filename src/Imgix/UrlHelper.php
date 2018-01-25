@@ -18,8 +18,7 @@ class UrlHelper {
         $this->params = $params;
     }
 
-    public function formatPath($path, $rawUrlEncode )
-    {
+    public function formatPath($path, $rawUrlEncode ) {
         if (0 === strpos($path, "http"))
             $path = $rawUrlEncode ? rawurlencode($path) : urlencode($path);
 
@@ -37,8 +36,8 @@ class UrlHelper {
         }
     }
 
-    public function deleteParamter($key) {
-        $this->deleteParamter($key, "");
+    public function deleteParameter($key) {
+        unset($this->params[$key]);
     }
 
     public function getURL() {
