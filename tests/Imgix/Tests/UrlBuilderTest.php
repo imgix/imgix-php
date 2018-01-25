@@ -3,9 +3,7 @@
 use Imgix\UrlBuilder;
 use Imgix\ShardStrategy;
 
-require_once 'PHPUnit/Autoload.php';
-
-class UrlBuilderTest extends PHPUnit_Framework_TestCase {
+class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @expectedException        InvalidArgumentException
