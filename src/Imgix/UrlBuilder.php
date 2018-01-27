@@ -4,7 +4,7 @@ namespace Imgix;
 
 class UrlBuilder {
 
-    private $currentVersion = "1.1.1";
+    private $currentVersion = "1.1.0";
     private $domains;
     private $useHttps;
     private $signKey;
@@ -66,6 +66,6 @@ class UrlBuilder {
     // force unsigned int since 32-bit systems can return a signed integer
     // see warning here: http://php.net/manual/en/function.crc32.php
     public static function unsigned_crc32($v) {
-        return (int)sprintf( "%u", crc32($v));
+        return (int)sprintf("%u", crc32($v));
     }
 }
