@@ -2,7 +2,7 @@
 
 use Imgix\UrlHelper;
 
-class UrlHelperTest extends PHPUnit_Framework_TestCase {
+class UrlHelperTest extends \PHPUnit\Framework\TestCase {
 
     public function testHelperBuildSignedURLWithHashMapParams() {
         $params = array("w" => 500);

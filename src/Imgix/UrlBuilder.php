@@ -41,7 +41,7 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
     }
 
-    public function createURL($path, $params=array()) {
+    public function createURL($path, $params=array(), $rawEncodePath = false) {
         $scheme = $this->useHttps ? "https" : "http";
 
         if ($this->shardStrategy === ShardStrategy::CRC) {
@@ -58,7 +58,7 @@ class UrlBuilder {
             $params['ixlib'] = "php-" . $this->currentVersion;
         }
 
-        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
+        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params, $rawEncodePath);
 
         return $uh->getURL();
     }
@@ -66,6 +66,6 @@ class UrlBuilder {
     // force unsigned int since 32-bit systems can return a signed integer
     // see warning here: http://php.net/manual/en/function.crc32.php
     public static function unsigned_crc32($v) {
-        return intval(sprintf("%u", crc32($v)));
+        return (int)sprintf("%u", crc32($v));
     }
 }
