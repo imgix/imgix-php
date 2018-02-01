@@ -19,6 +19,9 @@ class UrlHelper {
     }
 
     public function formatPath($path, $rawUrlEncode ) {
+        if (!is_string($path) || strlen($path) < 1)
+            return '/';
+
         if (0 === strpos($path, "http"))
             $path = $rawUrlEncode ? rawurlencode($path) : urlencode($path);
 
