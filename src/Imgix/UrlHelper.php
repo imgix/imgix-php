@@ -22,11 +22,22 @@ class UrlHelper {
         if (!is_string($path) || strlen($path) < 1)
             return '/';
 
-        if (0 === strpos($path, "http"))
+        // Strip leading slash first (we'll re-add after encoding)
+        $path = preg_replace("/^\//", "", $path);
+
+        if (0 === strpos($path, "http")) {
+            // If this path is a full URL, encode the entire thing
             $path = rawurlencode($path);
 
-        $path = ($path[0] === '/' ? '' : '/') . $path;
-        return $path;
+        } else {
+            // If this path is just a path, only encode certain characters
+            $path = preg_replace_callback("/([^\w\-\/\:@])/", function ($match) {
+                return rawurlencode($match[0]);
+            }, $path);
+        }
+
+        // Add a leading slash before returning
+        return '/' . $path;
     }
 
     public function setParameter($key, $value) {
