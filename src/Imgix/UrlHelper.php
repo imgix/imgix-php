@@ -25,7 +25,7 @@ class UrlHelper {
         // Strip leading slash first (we'll re-add after encoding)
         $path = preg_replace("/^\//", "", $path);
 
-        if (0 === strpos($path, "http")) {
+        if (preg_match("/^https?:\/\//", $path)) {
             // If this path is a full URL, encode the entire thing
             $path = rawurlencode($path);
 
