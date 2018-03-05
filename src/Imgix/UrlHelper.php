@@ -10,23 +10,34 @@ class UrlHelper {
     private $signKey;
     private $params;
 
-    public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array(), $rawEncodePath = false) {
+    public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
         $this->domain = $domain;
-        $this->path = $this->formatPath( $path, $rawEncodePath );
+        $this->path = $this->formatPath($path);
         $this->scheme = $scheme;
         $this->signKey = $signKey;
         $this->params = $params;
     }
 
-    public function formatPath($path, $rawUrlEncode ) {
+    public function formatPath($path) {
         if (!is_string($path) || strlen($path) < 1)
             return '/';
 
-        if (0 === strpos($path, "http"))
-            $path = $rawUrlEncode ? rawurlencode($path) : urlencode($path);
+        // Strip leading slash first (we'll re-add after encoding)
+        $path = preg_replace("/^\//", "", $path);
 
-        $path = ($path[0] === '/' ? '' : '/') . $path;
-        return $path;
+        if (preg_match("/^https?:\/\//", $path)) {
+            // If this path is a full URL, encode the entire thing
+            $path = rawurlencode($path);
+
+        } else {
+            // If this path is just a path, only encode certain characters
+            $path = preg_replace_callback("/([^\w\-\/\:@])/", function ($match) {
+                return rawurlencode($match[0]);
+            }, $path);
+        }
+
+        // Add a leading slash before returning
+        return '/' . $path;
     }
 
     public function setParameter($key, $value) {

@@ -107,7 +107,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $builder->setSignKey("test1234");
         $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png");
 
-        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png?s=1f65f21dab7da2d3c104dfaf898ce8cc", $url);
+        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png?s=6a1d47f292194cfa7573da0e2bb6b0f4", $url);
     }
 
     public function testWithFullyQualifiedUrlWithParams() {
@@ -115,7 +115,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $builder->setSignKey("test1234");
         $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png?some=chill&params=1");
 
-        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png%3Fsome%3Dchill%26params%3D1?s=970429e4d150c4609142f4c0a86089c9", $url);
+        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?s=bbc73c61ebc739337b852ff8423a1da9", $url);
     }
 
     public function testInclusionOfLibraryVersionParam() {
@@ -124,23 +124,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $composerFileJson = json_decode(file_get_contents("./composer.json"), true);
         $version = $composerFileJson['version'];
 
-        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar+icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
-    }
-
-    public function testRawEncodePath() {
-        $builder    = new UrlBuilder("example.com");
-        $path       = "https://example.com/~.jpg";
-        $url        = $builder->createURL($path, [], true);
-
-        $this->assertContains('~.jpg', $url);
-    }
-
-    public function testNoRawEncodePath() {
-        $builder    = new UrlBuilder("example.com");
-        $path       = "https://example.com/~.jpg";
-        $url        = $builder->createURL($path);
-
-        $this->assertContains('%7E.jpg', $url);
+        $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
     }
   }
 ?>

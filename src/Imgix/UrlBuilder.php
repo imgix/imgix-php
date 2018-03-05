@@ -41,7 +41,7 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
     }
 
-    public function createURL($path, $params=array(), $rawEncodePath = false) {
+    public function createURL($path, $params=array()) {
         $scheme = $this->useHttps ? "https" : "http";
 
         if ($this->shardStrategy === ShardStrategy::CRC) {
@@ -58,7 +58,7 @@ class UrlBuilder {
             $params['ixlib'] = "php-" . $this->currentVersion;
         }
 
-        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params, $rawEncodePath);
+        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
 
         return $uh->getURL();
     }

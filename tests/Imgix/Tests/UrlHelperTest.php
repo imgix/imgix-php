@@ -4,6 +4,65 @@ use Imgix\UrlHelper;
 
 class UrlHelperTest extends \PHPUnit\Framework\TestCase {
 
+    /*--- formatPath() ---*/
+    public function testHelperFormatPathWithSimplePath() {
+        $path = "dog.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/" . $path);
+    }
+
+    public function testHelperFormatPathWithLeadingSlash() {
+        $path = "dog.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath("/" . $path), "/" . $path);
+    }
+
+    public function testHelperFormatPathWithUnencodedCharacters() {
+        $path = "images/püg.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/images/p%C3%BCg.jpg");
+    }
+
+    public function testHelperFormatPathWithFullUrl() {
+        $path = "http://mywebsite.com/images/dog.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fdog.jpg");
+    }
+
+    public function testHelperFormatPathWithFullHttpsUrl() {
+        $path = "https://mywebsite.com/images/dog.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/https%3A%2F%2Fmywebsite.com%2Fimages%2Fdog.jpg");
+    }
+
+    public function testHelperFormatPathWithFullUrlWithUnencodedCharacters() {
+        $path = "http://mywebsite.com/images/püg.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fp%C3%BCg.jpg");
+    }
+
+    public function testHelperFormatPathWithFullUrlWithLeadingSlash() {
+        $path = "/http://mywebsite.com/images/dog.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fdog.jpg");
+    }
+
+    public function testHelperFormatPathWithFullUrlWithEncodedCharacters() {
+        $path = "http://mywebsite.com/images/p%C3%BCg.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        // The pre-encoded characters should now be *double* encoded
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fp%25C3%25BCg.jpg");
+    }
+
+    /*--- getURL() ---*/
     public function testHelperBuildSignedURLWithHashMapParams() {
         $params = array("w" => 500);
         $uh = new URLHelper("imgix-library-secure-test-source.imgix.net", "dog.jpg", "http", "EHFQXiZhxP4wA2c4", $params);
