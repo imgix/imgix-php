@@ -41,6 +41,10 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
     }
 
+    public function setIncludeLibraryParam($includeLibraryParam) {
+        $this->includeLibraryParam = $includeLibraryParam;
+    }
+
     public function createURL($path, $params=array()) {
         $scheme = $this->useHttps ? "https" : "http";
 
