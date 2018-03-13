@@ -28,6 +28,10 @@ class UrlBuilder {
         $this->shardStrategy = $shardStrategy;
         $this->includeLibraryParam = $includeLibraryParam;
     }
+    
+    public function setIncludeLibraryParam($includeLibraryParam) {
+        $this->includeLibraryParam = $includeLibraryParam;
+    }
 
     public function setShardStrategy($start) {
         $this->shardStrategy = $start;
