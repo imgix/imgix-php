@@ -3,6 +3,7 @@
   "description": "A PHP client library for generating URLs with imgix.",
   "type": "library",
   "version": "2.1.0",
+  "license": "BSD-2-Clause",
   "keywords": [
     "imgix"
   ],
