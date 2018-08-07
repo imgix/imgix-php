@@ -62,6 +62,34 @@ class UrlHelperTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fp%25C3%25BCg.jpg");
     }
 
+    public function testHelperFormatPathHttpsURLAlreadyEncoded() {
+        $path = "https%3A%2F%2Fmywebsite.com%2Fimages%2Ffoo.JPG";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/https%3A%2F%2Fmywebsite.com%2Fimages%2Ffoo.JPG");
+    }
+
+    public function testHelperFormatPathHttspURLAlreadyEncodedWithSpecialCharacters() {
+        $path = "http%3A%2F%2Fmywebsite.com%2Fimages%2Fpüg.jpg";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Fp%C3%BCg.jpg");
+    }
+
+    public function testHelperFormatPathHttpURLAlreadyEncoded() {
+        $path = "http%3A%2F%2Fmywebsite.com%2Fimages%2Ffoo.JPG";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%3A%2F%2Fmywebsite.com%2Fimages%2Ffoo.JPG");
+    }
+
+    public function testHelperFormatPathInvalidURLEncoded() {
+        $path = "http%2F%2Fmywebsite.com%2Fimages%2FFoo.JPG";
+        $uh = new URLHelper("test.imgix.net", $path);
+
+        $this->assertEquals($uh->formatPath($path), "/http%252F%252Fmywebsite.com%252Fimages%252FFoo.JPG");
+    }
+
     /*--- getURL() ---*/
     public function testHelperBuildSignedURLWithHashMapParams() {
         $params = array("w" => 500);
