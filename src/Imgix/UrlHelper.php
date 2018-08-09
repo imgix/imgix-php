@@ -28,7 +28,14 @@ class UrlHelper {
         if (preg_match("/^https?:\/\//", $path)) {
             // If this path is a full URL, encode the entire thing
             $path = rawurlencode($path);
-
+        } else if (preg_match("/^https?:\/\/[^\s\/$.?#]*\.[^\s]*$/", rawurldecode($path))) {
+            // Using @stephenhay's solution from https://mathiasbynens.be/demo/url-regex
+            // to ensure URL's validity.
+            // $path looks like a valid encoded URL, however, it may still have
+            // unencoded unicode characters.
+            $path = preg_replace_callback("/([^\w\-\/\:@%])/", function ($match) {
+                return rawurlencode($match[0]);
+            }, $path);
         } else {
             // If this path is just a path, only encode certain characters
             $path = preg_replace_callback("/([^\w\-\/\:@])/", function ($match) {
@@ -92,7 +99,7 @@ class UrlHelper {
     }
 
     private static function base64url_encode($data) {
-      return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
     private static function joinURL($parts) {
