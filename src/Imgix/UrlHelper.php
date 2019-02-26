@@ -71,7 +71,7 @@ class UrlHelper {
                 if (substr($key, -2) == '64') {
                     $encodedVal = self::base64url_encode($val);
                 } else {
-                    $encodedVal = rawurlencode($val);
+                    $encodedVal = is_array($val) ? rawurlencode(implode(',',$val)) : rawurlencode($val);
                 }
 
                 $queryPairs[] = rawurlencode($key) . "=" . $encodedVal;
