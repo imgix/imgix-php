@@ -5,11 +5,9 @@ use Imgix\ShardStrategy;
 
 class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
-    /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage UrlBuilder requires at least one domain
-     */
     public function testURLBuilderRaisesExceptionOnNoDomains() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("UrlBuilder requires at least one domain");
         $domains = array();
         $ub = new URLBuilder($domains);
     }
