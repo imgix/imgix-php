@@ -124,5 +124,12 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
     }
+    public function testNestedParameters(){
+        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $params = array("auto" => array("compress","format"));
+        $url = $builder->createURL("bridge.png", $params);
+
+        $this->assertEquals("https://demos.imgix.net/bridge.png?auto=compress%2Cformat", $url);
+    }
   }
 ?>
