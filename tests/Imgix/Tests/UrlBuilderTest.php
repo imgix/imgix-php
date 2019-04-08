@@ -124,12 +124,44 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
     }
-    public function testNestedParameters(){
+    public function testNestedParameters() {
         $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
         $params = array("auto" => array("compress","format"));
         $url = $builder->createURL("bridge.png", $params);
 
         $this->assertEquals("https://demos.imgix.net/bridge.png?auto=compress%2Cformat", $url);
+    }
+    public function test_invalid_domain_append_slash() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
+        'domain names and should not include a protocol or any path element, i.e. ' .
+        '"example.imgix.net".');
+
+        $builder = new UrlBuilder("demos.imgix.net/", true, "", ShardStrategy::CRC, false);
+    }
+    public function test_invalid_domain_prepend_scheme() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
+        'domain names and should not include a protocol or any path element, i.e. ' .
+        '"example.imgix.net".');
+        
+        $builder = new UrlBuilder("https://demos.imgix.net", true, "", ShardStrategy::CRC, false);
+    }
+    public function test_invalid_domain_append_dash() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
+        'domain names and should not include a protocol or any path element, i.e. ' .
+        '"example.imgix.net".');
+        
+        $builder = new UrlBuilder("demos.imgix.net-", true, "", ShardStrategy::CRC, false);
+    }
+    public function test_invalid_domain_array() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
+        'domain names and should not include a protocol or any path element, i.e. ' .
+        '"example.imgix.net".');
+        
+        $builder = new UrlBuilder(array("demos.imgix.net","demos.imgix.net-"), true, "", ShardStrategy::CYCLE, false);
     }
   }
 ?>
