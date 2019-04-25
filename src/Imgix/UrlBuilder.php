@@ -16,6 +16,8 @@ class UrlBuilder {
         if (!is_array($domains)) {
             $this->domains = array($domains);
         } else {
+            $warning_message = "Warning: Domain sharding has been deprecated and will be removed in the next major version.";
+            @trigger_error($warning_message, E_USER_DEPRECATED);
             $this->domains = $domains;
         }
 
