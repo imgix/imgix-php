@@ -163,5 +163,17 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         
         $builder = new UrlBuilder(array("demos.imgix.net","demos.imgix.net-"), true, "", ShardStrategy::CYCLE, false);
     }
+    public function test_deprecation_warning() {
+        # Tests for deprecation warning using a custom error handler
+        # as the warning is typically suppressed to prevent polluting 
+        # error logs
+        set_error_handler(function($errno, $errstr, $errfile, $errline) {
+            $warning_message = "Warning: Domain sharding has been deprecated and will be removed in the next major version.";
+            $this->assertEquals($warning_message, $errstr);
+            $this->assertEquals(E_USER_DEPRECATED, $errno);
+        }, E_USER_DEPRECATED);
+
+        $builder = new UrlBuilder(array("demos.imgix.net","demos.imgix.net"), true, "", ShardStrategy::CYCLE, false);
+    }
   }
 ?>

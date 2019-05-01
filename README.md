@@ -83,6 +83,7 @@ echo $builder->createURL("bridge.png", $params);
 ```
 
 ## Domain Sharded URLs
+**Warning: Domain Sharding has been deprecated and will be removed in the next major release**
 
 Domain sharding enables you to spread image requests across multiple domains.
 This allows you to bypass the requests-per-host limits of browsers. We
