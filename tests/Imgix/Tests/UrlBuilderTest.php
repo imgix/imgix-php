@@ -1,38 +1,18 @@
 <?php
 
 use Imgix\UrlBuilder;
-use Imgix\ShardStrategy;
 
 class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
-    public function testURLBuilderRaisesExceptionOnNoDomains() {
+    public function testURLBuilderRaisesExceptionOnNoDomain() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("UrlBuilder requires at least one domain");
-        $domains = array();
-        $ub = new URLBuilder($domains);
-    }
-
-    public function testUrlBuilderCycleShard() {
-        // generate a url for the number of domains in use ensure they're cycled through...
-
-        $domains = array("jackangers.imgix.net", "jackangers2.imgix.net", "jackangers3.imgix.net");
-
-        $ub = new URLBuilder($domains, false, "", ShardStrategy::CRC, false);
-        $ub->setShardStrategy(ShardStrategy::CYCLE);
-
-        for ($i = 0; $i < 100; $i++) {
-          $used = array();
-          foreach ($domains as $domain) {
-            $url = $ub->createURL("chester.png");
-            $curDomain = parse_url($url)["host"];
-            $this->assertFalse(in_array($curDomain, $used));
-            $used[] = $curDomain;
-          }
-        }
+        $this->expectExceptionMessage("UrlBuilder must be passed a valid string domain");
+        $domain = null;
+        $ub = new URLBuilder($domain);
     }
 
     public function testExamplePlain() {
-        $builder = new UrlBuilder("demos.imgix.net", false, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", false, "",  false);
 
         $params = array("w" => 100, "h" => 100);
         $url = $builder->createURL("bridge.png", $params);
@@ -41,7 +21,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testExamplePlainHttps() {
-        $builder = new UrlBuilder("demos.imgix.net", false, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", false, "",  false);
 
         $builder->setUseHttps(true);
         $params = array("w" => 100, "h" => 100);
@@ -51,7 +31,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testExamplePlainSecure() {
-        $builder = new UrlBuilder("demos.imgix.net", false, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", false, "",  false);
         $builder->setSignKey("test1234");
         $params = array("w" => 100, "h" => 100);
         $url = $builder->createURL("bridge.png", $params);
@@ -60,7 +40,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testParamKeysAreEscaped() {
-        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demo.imgix.net", true, "",  false);
         $params = array("hello world" => "interesting");
         $url = $builder->createURL("demo.png", $params);
 
@@ -68,7 +48,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testParamValuesAreEscaped() {
-        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demo.imgix.net", true, "",  false);
         $params = array("hello_world" => '/foo"><script>alert("hacked")</script><');
         $url = $builder->createURL("demo.png", $params);
 
@@ -76,7 +56,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testZeroValue() {
-        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", true, "",  false);
 
         $params = array("foo" => 0);
         $url = $builder->createURL("bridge.png", $params);
@@ -85,7 +65,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testBase64ParamVariantsAreBase64Encoded() {
-        $builder = new UrlBuilder("demo.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demo.imgix.net", true, "",  false);
         $params = array("txt64" => 'I cannøt belîév∑ it wors! 😱');
         $url = $builder->createURL("~text", $params);
 
@@ -93,7 +73,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testWithFullyQualifiedUrl() {
-        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", true, "",  false);
         $builder->setSignKey("test1234");
         $url = $builder->createUrl("http://media.giphy.com/media/jCMq0p94fgBIk/giphy.gif");
 
@@ -101,7 +81,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testWithFullyQualifiedUrlWithSpaces() {
-        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", true, "",  false);
         $builder->setSignKey("test1234");
         $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png");
 
@@ -109,7 +89,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testWithFullyQualifiedUrlWithParams() {
-        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", true, "",  false);
         $builder->setSignKey("test1234");
         $url = $builder->createUrl("https://my-demo-site.com/files/133467012/avatar icon.png?some=chill&params=1");
 
@@ -124,56 +104,40 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         $this->assertEquals("https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-" . $version, $url);
     }
+
     public function testNestedParameters() {
-        $builder = new UrlBuilder("demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net", true, "",  false);
         $params = array("auto" => array("compress","format"));
         $url = $builder->createURL("bridge.png", $params);
 
         $this->assertEquals("https://demos.imgix.net/bridge.png?auto=compress%2Cformat", $url);
     }
+
     public function test_invalid_domain_append_slash() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
-        'domain names and should not include a protocol or any path element, i.e. ' .
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
 
-        $builder = new UrlBuilder("demos.imgix.net/", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("demos.imgix.net/", true, "",  false);
     }
+
     public function test_invalid_domain_prepend_scheme() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
-        'domain names and should not include a protocol or any path element, i.e. ' .
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
         
-        $builder = new UrlBuilder("https://demos.imgix.net", true, "", ShardStrategy::CRC, false);
+        $builder = new UrlBuilder("https://demos.imgix.net", true, "",  false);
     }
+    
     public function test_invalid_domain_append_dash() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
-        'domain names and should not include a protocol or any path element, i.e. ' .
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
         
-        $builder = new UrlBuilder("demos.imgix.net-", true, "", ShardStrategy::CRC, false);
-    }
-    public function test_invalid_domain_array() {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domains must be passed in as fully-qualified ' . 
-        'domain names and should not include a protocol or any path element, i.e. ' .
-        '"example.imgix.net".');
-        
-        $builder = new UrlBuilder(array("demos.imgix.net","demos.imgix.net-"), true, "", ShardStrategy::CYCLE, false);
-    }
-    public function test_deprecation_warning() {
-        # Tests for deprecation warning using a custom error handler
-        # as the warning is typically suppressed to prevent polluting 
-        # error logs
-        set_error_handler(function($errno, $errstr, $errfile, $errline) {
-            $warning_message = "Warning: Domain sharding has been deprecated and will be removed in the next major version.";
-            $this->assertEquals($warning_message, $errstr);
-            $this->assertEquals(E_USER_DEPRECATED, $errno);
-        }, E_USER_DEPRECATED);
-
-        $builder = new UrlBuilder(array("demos.imgix.net","demos.imgix.net"), true, "", ShardStrategy::CYCLE, false);
+        $builder = new UrlBuilder("demos.imgix.net-", true, "",  false);
     }
   }
 ?>
