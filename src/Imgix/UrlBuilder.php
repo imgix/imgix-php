@@ -12,7 +12,7 @@ class UrlBuilder {
     public function __construct($domain, $useHttps = false, $signKey = "", $includeLibraryParam = true) {
 
         if (!is_string($domain)) {
-            throw new \InvalidArgumentException("UrlBuilder must be passed a valid string domain");
+            throw new \InvalidArgumentException("UrlBuilder must be passed a string domain");
         }
 
         $this->domain = $domain;

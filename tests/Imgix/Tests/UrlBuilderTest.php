@@ -6,7 +6,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     public function testURLBuilderRaisesExceptionOnNoDomain() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("UrlBuilder must be passed a valid string domain");
+        $this->expectExceptionMessage("UrlBuilder must be passed a string domain");
         $domain = null;
         $ub = new URLBuilder($domain);
     }
