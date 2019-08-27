@@ -57,4 +57,64 @@ class UrlBuilder {
 
         return $uh->getURL();
     }
+
+    public function createSrcSet($path, $params=array()) {
+        $width = array_key_exists('w', $params) ? $params['w'] : NULL;
+        $height = array_key_exists('h', $params) ? $params['h'] : NULL;
+        $aspectRatio = array_key_exists('ar', $params) ? $params['ar'] : NULL;
+
+        if (($width) || ($height && $aspectRatio)) {
+            return $this->createDPRSrcSet($path, $params);
+        }
+        else {
+            return $this->createSrcSetPairs($path, $params);
+        }
+    }
+
+    private function createDPRSrcSet($path, $params) {
+        $srcset = "";
+        $targetRatios = array(1, 2, 3, 4, 5);
+        $url = $this->createURL($path, $params);
+
+        $size = count($targetRatios);
+        for($i = 0; $i < $size; $i++) {
+            $currentRatio = $targetRatios[$i];
+            $srcset .= $url." ".$currentRatio."x,\n";
+        }
+
+        return substr($srcset, 0, strlen($srcset)-2);
+    }
+
+    private function createSrcSetPairs($path, $params) {
+        $srcset = "";
+        $currentWidth = NULL;
+        $currentParams = NULL;
+        $targetWidths = $this->targetWidths();
+
+        $size = count($targetWidths);
+        for($i = 0; $i < $size; $i++) {
+            $currentWidth = $targetWidths[$i];
+            $currentParams = $params;
+            $currentParams['w'] = $currentWidth;
+            $srcset .= $this->createURL($path, $currentParams) . " " . $currentWidth . "w,\n";
+        }
+
+        return substr($srcset, 0, strlen($srcset)-2);
+    }
+
+    private function targetWidths() {
+        $resolutions = array();
+        $prev = 100;
+        $INCREMENT_PERCENTAGE = 8;
+        $MAX_SIZE = 8192;
+
+
+        while ($prev <= $MAX_SIZE) {
+            array_push($resolutions, 2 * round($prev / 2));
+            $prev *= 1 + ($INCREMENT_PERCENTAGE / 100) * 2;
+        }
+
+        array_push($resolutions, $MAX_SIZE);
+        return $resolutions;
+    }
 }
