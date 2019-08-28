@@ -197,7 +197,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertStringContainsString("s=", $url);
+            $this->assertRegExp("/s=/", $url);
 
             // extract the sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
@@ -216,7 +216,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
-            $this->assertStringContainsString("h=300", $src);
+            $this->assertRegExp("/h=300/", $src);
         }
     }
 
@@ -260,7 +260,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         }, $srclist);
 
         foreach ($srcs as $src) {
-            $this->assertStringContainsString("s=", $src);
+            $this->assertRegExp("/s=/", $src);
 
             // parse out query params
             $params = substr($src, strrpos($src, "?"));
@@ -296,7 +296,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertStringContainsString("s=", $url);
+            $this->assertRegExp("/s=/", $url);
 
             // extract the sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
@@ -350,7 +350,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         }, $srclist);
 
         foreach ($srcs as $src) {
-            $this->assertStringContainsString("s=", $src);
+            $this->assertRegExp("/s=/", $src);
 
             // parse out query params
             $params = substr($src, strrpos($src, "?"));
@@ -386,7 +386,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertStringContainsString("s=", $url);
+            $this->assertRegExp("/s=/", $url);
 
             // extract the sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
