@@ -77,7 +77,7 @@ class UrlBuilder {
         $url = $this->createURL($path, $params);
 
         $size = count($targetRatios);
-        for($i = 0; $i < $size; $i++) {
+        for ($i = 0; $i < $size; $i++) {
             $currentRatio = $targetRatios[$i];
             $srcset .= $url." ".$currentRatio."x,\n";
         }
@@ -92,7 +92,7 @@ class UrlBuilder {
         $targetWidths = $this->targetWidths();
 
         $size = count($targetWidths);
-        for($i = 0; $i < $size; $i++) {
+        for ($i = 0; $i < $size; $i++) {
             $currentWidth = $targetWidths[$i];
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
@@ -108,9 +108,12 @@ class UrlBuilder {
         $INCREMENT_PERCENTAGE = 8;
         $MAX_SIZE = 8192;
 
+        $ensureEven = function($n) {
+            return 2 * round($n / 2);
+        };
 
         while ($prev <= $MAX_SIZE) {
-            array_push($resolutions, 2 * round($prev / 2));
+            array_push($resolutions, $ensureEven($prev));
             $prev *= 1 + ($INCREMENT_PERCENTAGE / 100) * 2;
         }
 
