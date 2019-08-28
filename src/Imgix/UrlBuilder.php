@@ -79,8 +79,7 @@ class UrlBuilder {
         for ($i = 0; $i < $size; $i++) {
             $currentRatio = $targetRatios[$i];
             $currentParams = $params;
-            $dpr_value = array("dpr"=>($i+1));
-            $currentParams += $dpr_value;
+            $currentParams['dpr'] = $i+1;
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentRatio . "x,\n";
         }
 
