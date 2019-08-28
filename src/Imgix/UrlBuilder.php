@@ -74,12 +74,14 @@ class UrlBuilder {
     private function createDPRSrcSet($path, $params) {
         $srcset = "";
         $targetRatios = array(1, 2, 3, 4, 5);
-        $url = $this->createURL($path, $params);
 
         $size = count($targetRatios);
         for ($i = 0; $i < $size; $i++) {
             $currentRatio = $targetRatios[$i];
-            $srcset .= $url." ".$currentRatio."x,\n";
+            $currentParams = $params;
+            $dpr_value = array("dpr"=>($i+1));
+            $currentParams += $dpr_value;
+            $srcset .= $this->createURL($path, $currentParams) . " " . $currentRatio . "x,\n";
         }
 
         return substr($srcset, 0, strlen($srcset)-2);

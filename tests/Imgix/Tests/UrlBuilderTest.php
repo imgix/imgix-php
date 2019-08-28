@@ -183,25 +183,36 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
-            $generatedRatio = explode(" ", $src)[1];
+            list($generatedURL, $generatedRatio) = explode(" ", $src);
+            
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
+            
+            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            
             $devicePixelRatio += 1;
         }
     }
 
     public function testGivenWidthSignsURLs() {
         $srcset = $this->srcsetBuilder(array("w"=>300));
-        $expectedSignature = "65bff01b598e97ddeb1f39a56930ec30";
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
             $this->assertRegExp("/s=/", $url);
 
-            // extract the sign parameter
+            // parse out query params
+            $params = substr($url, strrpos($url, "?"));
+            $params = substr($params, 0, strrpos($params, "s=")-1);
+
+            // parse out sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
-            $this->assertEquals($expectedSignature, $generatedSignature);
+
+            $signatureBase = "my-key" . "/bridge.png" . $params;
+            $expectSignature = md5($signatureBase);
+
+            $this->assertEquals($expectSignature, $generatedSignature);
         }
     }
 
@@ -282,25 +293,36 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
-            $generatedRatio = explode(" ", $src)[1];
+            list($generatedURL, $generatedRatio) = explode(" ", $src);
+            
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
+            
+            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            
             $devicePixelRatio += 1;
         }
     }
 
     public function testGivenWidthAndHeightSignsURLs() {
         $srcset = $this->srcsetBuilder(array("w"=>300, "h"=>"400"));
-        $expectedSignature = "27e4d1ec19ed834a3d8b7ec89dda0e20";
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
             $this->assertRegExp("/s=/", $url);
+            
+            // parse out query params
+            $params = substr($url, strrpos($url, "?"));
+            $params = substr($params, 0, strrpos($params, "s=")-1);
 
-            // extract the sign parameter
+            // parse out sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
-            $this->assertEquals($expectedSignature, $generatedSignature);
+
+            $signatureBase = "my-key" . "/bridge.png" . $params;
+            $expectSignature = md5($signatureBase);
+
+            $this->assertEquals($expectSignature, $generatedSignature);
         }
     }
 
@@ -372,25 +394,36 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
-            $generatedRatio = explode(" ", $src)[1];
+            list($generatedURL, $generatedRatio) = explode(" ", $src);
+            
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
+            
+            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            
             $devicePixelRatio += 1;
         }
     }
 
     public function testGivenAspectRatioAndHeightSignsURLs() {
         $srcset = $this->srcsetBuilder(array("h"=>400,"ar"=>"3:2"));
-        $expectedSignature = "96e491fd2b81c3306545a6d88ccbe7eb";
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
             $this->assertRegExp("/s=/", $url);
+ 
+            // parse out query params
+            $params = substr($url, strrpos($url, "?"));
+            $params = substr($params, 0, strrpos($params, "s=")-1);
 
-            // extract the sign parameter
+            // parse out sign parameter
             $generatedSignature = substr($url, strrpos($url, "s=")+2);
-            $this->assertEquals($expectedSignature, $generatedSignature);
+
+            $signatureBase = "my-key" . "/bridge.png" . $params;
+            $expectSignature = md5($signatureBase);
+
+            $this->assertEquals($expectSignature, $generatedSignature);
         }
     }
 
