@@ -2,7 +2,7 @@
   "name": "imgix/imgix-php",
   "description": "A PHP client library for generating URLs with imgix.",
   "type": "library",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "BSD-2-Clause",
   "keywords": [
     "imgix"

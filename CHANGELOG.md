@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.0"></a>
+
+## [3.1.0](https://github.com/imgix/imgix-php/compare/3.0.0...3.1.0) (2019-08-29)
+
+* feat: add srcset generation ([#47](https://github.com/imgix/imgix-php/pull/47))
+
 <a name="3.0.0"></a>
 
 ## [3.0.0](https://github.com/imgix/imgix-php/compare/2.3.0...3.0.0) (2019-06-11)
