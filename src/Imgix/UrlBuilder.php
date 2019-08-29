@@ -9,6 +9,9 @@ class UrlBuilder {
     private $useHttps;
     private $signKey;
 
+    private const TARGETRATIOS = array(1, 2, 3, 4, 5);
+    private $targetWidths;
+
     public function __construct($domain, $useHttps = false, $signKey = "", $includeLibraryParam = true) {
 
         if (!is_string($domain)) {
@@ -21,6 +24,7 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
         $this->signKey = $signKey;
         $this->includeLibraryParam = $includeLibraryParam;
+        $this->targetWidths = $this->targetWidths();
     }
 
     private function validateDomain($domain) {
@@ -73,34 +77,32 @@ class UrlBuilder {
 
     private function createDPRSrcSet($path, $params) {
         $srcset = "";
-        $targetRatios = array(1, 2, 3, 4, 5);
 
-        $size = count($targetRatios);
+        $size = count(self::TARGETRATIOS);
         for ($i = 0; $i < $size; $i++) {
-            $currentRatio = $targetRatios[$i];
+            $currentRatio = self::TARGETRATIOS[$i];
             $currentParams = $params;
             $currentParams['dpr'] = $i+1;
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentRatio . "x,\n";
         }
 
-        return substr($srcset, 0, strlen($srcset)-2);
+        return substr($srcset, 0, strlen($srcset) - 2);
     }
 
     private function createSrcSetPairs($path, $params) {
         $srcset = "";
         $currentWidth = NULL;
         $currentParams = NULL;
-        $targetWidths = $this->targetWidths();
 
-        $size = count($targetWidths);
+        $size = count($this->targetWidths);
         for ($i = 0; $i < $size; $i++) {
-            $currentWidth = $targetWidths[$i];
+            $currentWidth = $this->targetWidths[$i];
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentWidth . "w,\n";
         }
 
-        return substr($srcset, 0, strlen($srcset)-2);
+        return substr($srcset, 0, strlen($srcset) - 2);
     }
 
     private function targetWidths() {
