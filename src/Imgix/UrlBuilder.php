@@ -9,7 +9,10 @@ class UrlBuilder {
     private $useHttps;
     private $signKey;
 
-    private const TARGETRATIOS = array(1, 2, 3, 4, 5);
+    // define class constants
+    // should be private; but visibility modifiers are not supported php version <7.1
+    const TARGETRATIOS = array(1, 2, 3, 4, 5);
+    // constants cannot be dynamically assigned; keeping as a class variable instead
     private $targetWidths;
 
     public function __construct($domain, $useHttps = false, $signKey = "", $includeLibraryParam = true) {
