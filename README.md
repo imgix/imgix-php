@@ -88,7 +88,7 @@ The imgix library allows for generation of custom `srcset` attributes, which can
 
 ```php
 $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-$builder->createSrcSet("bridge.png");
+echo $builder->createSrcSet("bridge.png");
 ```
 
 Will produce the following attribute value, which can then be served to the client:
@@ -106,7 +106,7 @@ In cases where enough information is provided about an image's dimensions, `crea
 
 ```php
 $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-$builder->createSrcSet("bridge.png", array("h"=>800, "ar"=>"3:2", "fit"=>"crop"));
+echo $builder->createSrcSet("bridge.png", array("h"=>800, "ar"=>"3:2", "fit"=>"crop"));
 ```
 
 Will produce the following attribute value:
