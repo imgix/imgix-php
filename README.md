@@ -1,11 +1,23 @@
-![imgix logo](https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=200&h=200)
+<!-- ix-docs-ignore -->
+![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
 
+`imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/).
+
+[![Version](https://poser.pugx.org/imgix/imgix-php/v/stable)](https://packagist.org/packages/imgix/imgix-php)
 [![Build Status](https://travis-ci.org/imgix/imgix-php.png?branch=master)](https://travis-ci.org/imgix/imgix-php)
+[![Downloads](https://img.shields.io/packagist/dt/imgix/imgix-php)](https://packagist.org/packages/imgix/imgix-php)
+[![License](https://img.shields.io/github/license/imgix/imgix-php)](https://github.com/imgix/imgix-php/blob/master/LICENSE)
 
-A PHP client library for generating URLs with imgix. imgix is a high-performance
-distributed image processing service. More information can be found at
-[http://www.imgix.com](http://www.imgix.com).
+---
+<!-- /ix-docs-ignore -->
 
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+  - [Standalone](#standalone)
+  - [Using Composer](#using-composer)
+- [Basic Usage](#basic-usage)
+- [Signed URLs](#signed-urls)
+- [Srcset Generation](#srcset-generation)
 
 ## Dependencies
 
