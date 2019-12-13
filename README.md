@@ -1,7 +1,7 @@
 <!-- ix-docs-ignore -->
 ![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
 
-`imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/).
+`imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/). It is tested under PHP versions `5.6`, `7.0`, `7.1`, and `7.2`
 
 [![Version](https://poser.pugx.org/imgix/imgix-php/v/stable)](https://packagist.org/packages/imgix/imgix-php)
 [![Build Status](https://travis-ci.org/imgix/imgix-php.svg?branch=master)](https://travis-ci.org/imgix/imgix-php)
@@ -15,7 +15,7 @@
 - [Installation](#installation)
   - [Standalone](#standalone)
   - [Using Composer](#using-composer)
-- [Basic Usage](#basic-usage)
+- [Usage](#usage)
 - [Signed URLs](#signed-urls)
 - [Srcset Generation](#srcset-generation)
 
@@ -47,7 +47,7 @@ Define the following requirement in your `composer.json` file:
 
 And include the global `vendor/autoload.php` autoloader.
 
-## Basic Usage
+## Usage
 
 To begin creating imgix URLs programmatically, simply add the php files to your project (an example autoloader is also provided). The URL builder can be reused to create URLs for any
 images on the domains it is provided.
