@@ -15,7 +15,7 @@ class UrlBuilder {
     // constants cannot be dynamically assigned; keeping as a class variable instead
     private $targetWidths;
 
-    public function __construct($domain, $useHttps = false, $signKey = "", $includeLibraryParam = true) {
+    public function __construct($domain, $useHttps = true, $signKey = "", $includeLibraryParam = true) {
 
         if (!is_string($domain)) {
             throw new \InvalidArgumentException("UrlBuilder must be passed a string domain");
