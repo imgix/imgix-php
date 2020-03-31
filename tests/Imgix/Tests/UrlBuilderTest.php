@@ -20,6 +20,19 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals("http://demos.imgix.net/bridge.png?h=100&w=100", $url);
     }
 
+    public function testExamplePlainUsesHttpsByDefault() {
+        // Test default `UrlBuilder` uses https by default.
+        // Construct the builder with a `$domain` __only__.
+        $builder = new UrlBuilder("demos.imgix.net");
+        // Use `setIncludeLibraryParam`.
+        $builder->setIncludeLibraryParam(false);
+        // Construct a url in accordance with the other tests.
+        $params = array("w" => 100, "h" => 100);
+        // Create the url with the specified `$path` and `$params`.
+        $url = $builder->createURL("bridge.png", $params); 
+        $this->assertEquals("https://demos.imgix.net/bridge.png?h=100&w=100", $url);
+    }
+
     public function testExamplePlainHttps() {
         $builder = new UrlBuilder("demos.imgix.net", false, "",  false);
 
