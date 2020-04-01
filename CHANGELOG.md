@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 <a name="3.2.0"></a>
 
-## [3.2.0](https://github.com/imgix/imgix-php/compare/3.0.0...3.2.0) (2020-03-31)
+## [3.2.0](https://github.com/imgix/imgix-php/compare/3.1.0...3.2.0) (2020-03-31)
 
 * feat: use https by default ([#53](https://github.com/imgix/imgix-php/pull/53))
 
