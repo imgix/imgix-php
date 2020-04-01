@@ -4,7 +4,7 @@ namespace Imgix;
 
 class UrlBuilder {
 
-    private $currentVersion = "3.1.0";
+    private $currentVersion = "3.2.0";
     private $domain;
     private $useHttps;
     private $signKey;

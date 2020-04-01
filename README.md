@@ -49,7 +49,7 @@ And include the global `vendor/autoload.php` autoloader.
 
 ## Usage
 
-To begin creating imgix URLs programmatically, simply add the php files to your project (an example autoloader is also provided). The URL builder can be reused to create URLs for any
+To begin creating imgix URLs programmatically, add the php files to your project (an example autoloader is also provided). The URL builder can be reused to create URLs for any
 images on the domains it is provided.
 
 ```php
@@ -63,13 +63,13 @@ echo $builder->createURL("bridge.png", $params);
 // http://demos.imgix.net/bridge.png?h=100&w=100
 ```
 
-For HTTPS support, simply use the setter `setUseHttps` on the builder
+HTTPS support is available _by default_. However, if you need HTTP support, call `setUseHttps` on the builder:
 
 ```php
 use Imgix\UrlBuilder;
 
 $builder = new UrlBuilder("demos.imgix.net");
-$builder->setUseHttps(true);
+$builder->setUseHttps(false);
 $params = array("w" => 100, "h" => 100);
 echo $builder->createURL("bridge.png", $params);
 
