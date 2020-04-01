@@ -63,7 +63,7 @@ echo $builder->createURL("bridge.png", $params);
 // http://demos.imgix.net/bridge.png?h=100&w=100
 ```
 
-Currently, HTTPS support is available _by default_. However, if you need HTTP support, simply call `setUseHttps` on the builder:
+HTTPS support is available _by default_. However, if you need HTTP support, call `setUseHttps` on the builder:
 
 ```php
 use Imgix\UrlBuilder;
