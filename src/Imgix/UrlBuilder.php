@@ -9,6 +9,12 @@ class UrlBuilder {
     private $useHttps;
     private $signKey;
 
+    const TARGETWIDTHS = array(
+        100, 116, 134, 156, 182, 210, 244, 282,
+        328, 380, 442, 512, 594, 688, 798, 926,
+        1074, 1246, 1446, 1678, 1946, 2258, 2618,
+        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192);
+
     // define class constants
     // should be private; but visibility modifiers are not supported php version <7.1
     const TARGETRATIOS = array(1, 2, 3, 4, 5);
@@ -65,7 +71,7 @@ class UrlBuilder {
         return $uh->getURL();
     }
 
-    public function createSrcSet($path, $params=array()) {
+    public function createSrcSet($path, $params=array(), $start=100, $stop=8192, $tol=8) {
         $width = array_key_exists('w', $params) ? $params['w'] : NULL;
         $height = array_key_exists('h', $params) ? $params['h'] : NULL;
         $aspectRatio = array_key_exists('ar', $params) ? $params['ar'] : NULL;
@@ -74,7 +80,8 @@ class UrlBuilder {
             return $this->createDPRSrcSet($path, $params);
         }
         else {
-            return $this->createSrcSetPairs($path, $params);
+            $targets = $this->targetWidths($start=$start, $stop=$stop, $tol=$tol);
+            return $this->createSrcSetPairs($path, $params, $targets=$targets);
         }
     }
 
@@ -129,14 +136,14 @@ class UrlBuilder {
         return substr($srcset, 0, strlen($srcset) - 2);
     }
 
-    private function createSrcSetPairs($path, $params) {
+    private function createSrcSetPairs($path, $params, $targets=self::TARGETWIDTHS) {
         $srcset = "";
         $currentWidth = NULL;
         $currentParams = NULL;
 
-        $size = count($this->targetWidths);
+        $size = count($targets);
         for ($i = 0; $i < $size; $i++) {
-            $currentWidth = $this->targetWidths[$i];
+            $currentWidth = $targets[$i];
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentWidth . "w,\n";
