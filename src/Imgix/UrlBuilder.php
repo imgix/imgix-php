@@ -78,6 +78,43 @@ class UrlBuilder {
         }
     }
 
+        
+    /**
+     * Generate a list of target widths.
+     * 
+     * This function generates an array of target widths used to
+     * width-describe image candidate strings (URLs) within a
+     * srcset attribute.
+     * 
+     * This function returns an array of even integer values that
+     * denote image target widths. This array begins with `$start`
+     * and ends with `$stop`. The `$tol` or tolerance value dictates
+     * how many values lie between `$start` and `$stop`.
+     * 
+     * @param  int $start Starting minimum width value.
+     * @param  int $stop Stopping maximum width value.
+     * @param  int $tol Tolerable amount of width variation.
+     * @return int[] $resolutions An array of even integer values.
+     */
+    public function targetWidths($start=100, $stop=8192, $tol=8) {
+        $resolutions = array();
+
+        $ensureEven = function($n) {
+            return intval(2 * round($n / 2.0));
+        };
+
+        while ($start < $stop && $start < 8192) {
+            array_push($resolutions, $ensureEven($start));
+            $start *= 1 + ($tol / 100.0) * 2;
+        }
+
+        if (end($resolutions) < $stop) {
+            array_push($resolutions, $stop);
+        }
+        
+        return $resolutions;
+    }
+
     private function createDPRSrcSet($path, $params) {
         $srcset = "";
 
@@ -106,24 +143,5 @@ class UrlBuilder {
         }
 
         return substr($srcset, 0, strlen($srcset) - 2);
-    }
-
-    private function targetWidths() {
-        $resolutions = array();
-        $prev = 100;
-        $INCREMENT_PERCENTAGE = 8;
-        $MAX_SIZE = 8192;
-
-        $ensureEven = function($n) {
-            return 2 * round($n / 2);
-        };
-
-        while ($prev <= $MAX_SIZE) {
-            array_push($resolutions, $ensureEven($prev));
-            $prev *= 1 + ($INCREMENT_PERCENTAGE / 100) * 2;
-        }
-
-        array_push($resolutions, $MAX_SIZE);
-        return $resolutions;
     }
 }
