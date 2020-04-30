@@ -274,6 +274,48 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.2.0&w=108 108w';
         }
     }
 
+    public function testDprSrcsetWithQ100() {
+        $builder = new UrlBuilder("demos.imgix.net", true, false);
+        $actual = $builder->createSrcSet(
+        $path="image.jpg", $array=array("w" => 640, "q" => 100));
+        $expected =
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=100&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=100&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=100&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=100&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=100&w=640 5x';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testDprSrcsetWithDefaultQuality() {
+        $builder = new UrlBuilder("demos.imgix.net", true, false);
+        $actual = $builder->createSrcSet($path="image.jpg", $array=array("w" => 640));
+
+        $expected =
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=50&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=35&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=23&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=640 5x';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testDprSrcsetWithDisabledVariableQuality() {
+        $builder = new UrlBuilder("demos.imgix.net", true, false);
+        $actual = $builder->createSrcSet(
+            $path="image.jpg",
+            $array=array("w" => 640, "q" => 99),
+            $disable_variable_output=true);
+
+        $expected =
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=99&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=99&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=99&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=99&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=99&w=640 5x';
+        $this->assertEquals($expected, $actual);
+    }
+
     public function testGivenWidthSignsURLs() {
         $srcset = $this->srcsetBuilder(array("w"=>300));
         $srclist = explode(",", $srcset);
