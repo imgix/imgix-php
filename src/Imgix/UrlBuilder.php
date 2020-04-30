@@ -18,6 +18,9 @@ class UrlBuilder {
     // define class constants
     // should be private; but visibility modifiers are not supported php version <7.1
     const TARGETRATIOS = array(1, 2, 3, 4, 5);
+
+    const DPRQUALITIES = array(1 => 75, 2 => 50, 3 => 35, 4 => 23, 5 => 20);
+
     // constants cannot be dynamically assigned; keeping as a class variable instead
     private $targetWidths;
 
@@ -71,13 +74,16 @@ class UrlBuilder {
         return $uh->getURL();
     }
 
-    public function createSrcSet($path, $params=array(), $start=100, $stop=8192, $tol=8) {
+    public function createSrcSet($path, $params=array(), $start=100, $stop=8192, $tol=8, $disable_variable_quality=false) {
         $width = array_key_exists('w', $params) ? $params['w'] : NULL;
         $height = array_key_exists('h', $params) ? $params['h'] : NULL;
         $aspectRatio = array_key_exists('ar', $params) ? $params['ar'] : NULL;
 
         if (($width) || ($height && $aspectRatio)) {
-            return $this->createDPRSrcSet($path, $params);
+            return $this->createDPRSrcSet(
+                $path=$path, 
+                $params=$params, 
+                $disable_variable_quality=$disable_variable_quality);
         }
         else {
             $targets = $this->targetWidths($start=$start, $stop=$stop, $tol=$tol);
@@ -85,7 +91,6 @@ class UrlBuilder {
         }
     }
 
-        
     /**
      * Generate a list of target widths.
      * 
@@ -122,14 +127,24 @@ class UrlBuilder {
         return $resolutions;
     }
 
-    private function createDPRSrcSet($path, $params) {
+    private function createDPRSrcSet(
+        $path,
+        $params,
+        $targets=self::TARGETRATIOS,
+        $disable_variable_quality=false) {
+        
         $srcset = "";
 
         $size = count(self::TARGETRATIOS);
         for ($i = 0; $i < $size; $i++) {
-            $currentRatio = self::TARGETRATIOS[$i];
             $currentParams = $params;
             $currentParams['dpr'] = $i+1;
+            $currentRatio = self::TARGETRATIOS[$i];
+            // If variable quality output has been disabled _and_
+            // the `q` param _has not_ been passed:
+            if (!$disable_variable_quality && !isset($params["q"])) {
+                $currentParams["q"] = self::DPRQUALITIES[$i + 1];
+            }
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentRatio . "x,\n";
         }
 
