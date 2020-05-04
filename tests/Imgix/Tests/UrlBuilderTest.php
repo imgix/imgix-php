@@ -305,7 +305,7 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=640 5x';
         $actual = $builder->createSrcSet(
             $path="image.jpg",
             $array=array("w" => 640, "q" => 99),
-            $disable_variable_output=true);
+            $disableVariableQuality=true);
 
         $expected =
 'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=99&w=640 1x,
