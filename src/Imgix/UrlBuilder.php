@@ -74,7 +74,7 @@ class UrlBuilder {
         return $uh->getURL();
     }
 
-    public function createSrcSet($path, $params=array(), $start=100, $stop=8192, $tol=8, $disable_variable_quality=false) {
+    public function createSrcSet($path, $params=array(), $start=100, $stop=8192, $tol=8, $disableVariableQuality=false) {
         $width = array_key_exists('w', $params) ? $params['w'] : NULL;
         $height = array_key_exists('h', $params) ? $params['h'] : NULL;
         $aspectRatio = array_key_exists('ar', $params) ? $params['ar'] : NULL;
@@ -83,7 +83,7 @@ class UrlBuilder {
             return $this->createDPRSrcSet(
                 $path=$path, 
                 $params=$params, 
-                $disable_variable_quality=$disable_variable_quality);
+                $disableVariableQuality=$disableVariableQuality);
         }
         else {
             $targets = $this->targetWidths($start=$start, $stop=$stop, $tol=$tol);
@@ -131,7 +131,7 @@ class UrlBuilder {
         $path,
         $params,
         $targets=self::TARGETRATIOS,
-        $disable_variable_quality=false) {
+        $disableVariableQuality=false) {
         
         $srcset = "";
 
@@ -142,7 +142,7 @@ class UrlBuilder {
             $currentRatio = self::TARGETRATIOS[$i];
             // If variable quality output has been disabled _and_
             // the `q` param _has not_ been passed:
-            if (!$disable_variable_quality && !isset($params["q"])) {
+            if (!$disableVariableQuality && !isset($params["q"])) {
                 $currentParams["q"] = self::DPRQUALITIES[$i + 1];
             }
             $srcset .= $this->createURL($path, $currentParams) . " " . $currentRatio . "x,\n";
