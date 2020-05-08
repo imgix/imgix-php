@@ -109,11 +109,16 @@ class UrlBuilder {
      * @return int[] $resolutions An array of even integer values.
      */
     public function targetWidths($start=100, $stop=8192, $tol=8) {
-        $resolutions = array();
 
         $ensureEven = function($n) {
             return intval(2 * round($n / 2.0));
         };
+
+        if ($start == $stop) {
+            return array($ensureEven($start));
+        }
+
+        $resolutions = array();
 
         while ($start < $stop && $start < 8192) {
             array_push($resolutions, $ensureEven($start));
