@@ -5,10 +5,10 @@ use Imgix\UrlBuilder;
 class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     const TARGETWIDTHS = array(
-        100, 116, 134, 156, 182, 210, 244, 282,
-        328, 380, 442, 512, 594, 688, 798, 926,
-        1074, 1246, 1446, 1678, 1946, 2258, 2618,
-        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192);
+        100, 116, 135, 156, 181, 210, 244, 283,
+        328, 380, 441, 512, 594, 689, 799, 927,
+        1075, 1247, 1446, 1678, 1946, 2257, 2619,
+        3038, 3524, 4087, 4741, 5500, 6380, 7401, 8192);
 
     public function testURLBuilderRaisesExceptionOnNoDomain() {
         $this->expectException(InvalidArgumentException::class);
@@ -171,7 +171,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     public function testSrcsetCustomTargetWidths100to7400() {
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-        $expected = $builder->targetWidths($start=100, $stop=7400);
+        $expected = $builder->targetWidths($start=100, $stop=7401);
         $actual = array_slice(self::TARGETWIDTHS, 0, -1);
         $this->assertEquals(count($expected), count($actual));
         $this->assertEquals($expected, $actual);
@@ -183,11 +183,11 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         // range, inclusively.
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
 
-        $start = 328; $stop = 4088;
-        $idx_328 = 8; $idx_4088 = 18;
+        $start = 328; $stop = 4087;
+        $idx_328 = 8; $idx_4087 = 18;
 
         $expected = $builder->targetWidths($start=$start, $stop=$stop);
-        $actual = array_slice(self::TARGETWIDTHS, $idx_328, $idx_4088);
+        $actual = array_slice(self::TARGETWIDTHS, $idx_328, $idx_4087);
         $this->assertEquals(count($actual), count($expected));
         $this->assertEquals($start, $actual[0]);
         $this->assertEquals($stop, end($actual));
