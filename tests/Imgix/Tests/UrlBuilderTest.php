@@ -310,14 +310,16 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=640 5x';
 
     public function testDprSrcsetQoverridesVariableQuality() {
         $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $actual = $builder->createSrcSet($path="image.jpg", $params=array("w" => 640));
+        $params = array("w" => 640, "q" => 75);
+        $opts = array('disableVariableQuality' => false);
+        $actual = $builder->createSrcSet($path="image.jpg", $params, $opts);
 
         $expected =
 'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=50&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=35&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=23&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=640 5x';
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=75&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=75&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=75&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=75&w=640 5x';
         $this->assertEquals($expected, $actual);
     }
 
