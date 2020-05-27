@@ -295,48 +295,68 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=100&w=640 5x';
         $this->assertEquals($expected, $actual);
     }
 
+    // Test that variable quality is enabled by default.
     public function testDprSrcsetWithDefaultQuality() {
         $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $actual = $builder->createSrcSet($path="image.jpg", $params=array("w" => 640));
+        $actual = $builder->createSrcSet($path="image.jpg", $params=array("w" => 740));
 
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=50&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=35&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=23&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=640 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=740 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=50&w=740 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=35&w=740 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=23&w=740 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=20&w=740 5x';
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDprSrcsetQoverridesVariableQuality() {
+    // Test that `disableVariableQuality = true` disables `q` params.
+    public function testDprVariableQualityDisabled() {
         $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $params = array("w" => 640, "q" => 75);
-        $opts = array('disableVariableQuality' => false);
+        $params = array("w" => 640);
+        $opts = array('disableVariableQuality' => true);
+        $actual = $builder->createSrcSet($path="image.jpg", $params=$params, $opts=$opts);
+
+        $expected =
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&w=640 5x';
+        $this->assertEquals($expected, $actual);
+    }
+
+    // Test that `q` overrides the default qualities when
+    // `disableVariableQuality = false`.
+    public function testDprSrcsetQOverridesEnabledVariableQuality() {
+        $builder = new UrlBuilder("demos.imgix.net", true, false);
+        $params = array("w" => 540, "q" => 75);
+        $opts = array('disableVariableQuality' => false); // Enabled.
         $actual = $builder->createSrcSet($path="image.jpg", $params, $opts);
 
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=75&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=75&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=75&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=75&w=640 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=75&w=540 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=75&w=540 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=75&w=540 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=75&w=540 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=75&w=540 5x';
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDprSrcsetWithDisabledVariableQuality() {
+    // Test that `q` overrides `disableVariableQuality = true`.
+    public function testDprSrcsetQOverridesDisabledVariableQuality() {
         $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $opts = array('disableVariableQuality' => true);
+        $opts = array('disableVariableQuality' => true); // Disabled.
         $actual = $builder->createSrcSet(
             $path="image.jpg",
-            $params=array("w" => 640, "q" => 99),
+            $params=array("w" => 440, "q" => 99),
             $options=$opts);
 
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=99&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=99&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=99&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=99&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=99&w=640 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-3.2.0&q=99&w=440 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-3.2.0&q=99&w=440 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-3.2.0&q=99&w=440 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-3.2.0&q=99&w=440 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-3.2.0&q=99&w=440 5x';
         $this->assertEquals($expected, $actual);
     }
 

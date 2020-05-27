@@ -164,12 +164,7 @@ class UrlBuilder {
         return $hasWidth || ($hasHeight && $hasAspectRatio);
     }
 
-    private function createDPRSrcSet(
-        $path,
-        $params,
-        $targets=self::TARGET_RATIOS,
-        $disableVariableQuality=false) {
-        
+    private function createDPRSrcSet($path, $params, $disableVariableQuality=false) {
         $srcset = "";
 
         $size = count(self::TARGET_RATIOS);
