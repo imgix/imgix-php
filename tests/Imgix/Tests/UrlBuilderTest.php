@@ -235,7 +235,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.2.0&w=720 720w';
 
         // Now test custom tolerances (also within a range).
         $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $opts = array('start' => 100, 'stop' => 108, 'tol' => 1);
+        $opts = array('start' => 100, 'stop' => 108, 'tol' => 0.01);
         $actual = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
         $expected = // Raw string literal
 'https://demos.imgix.net/image.jpg?ixlib=php-3.2.0&w=100 100w,
