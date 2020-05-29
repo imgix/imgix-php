@@ -23,7 +23,7 @@ class UrlBuilder {
 
     const MIN_WIDTH = 100;
     const MAX_WIDTH = 8192;
-    const SRCSET_WIDTH_TOLERANCE = 8;
+    const SRCSET_WIDTH_TOLERANCE = 0.08;
 
     // constants cannot be dynamically assigned; keeping as a class variable instead
     private $targetWidths;
@@ -134,7 +134,7 @@ class UrlBuilder {
 
         while ($start < $stop && $start < self::MAX_WIDTH) {
             array_push($resolutions, (int) round($start));
-            $start *= 1 + ($tol / 100.0) * 2;
+            $start *= 1 + $tol * 2;
         }
 
         // The most recently appended value may, or may not, be
