@@ -11,6 +11,9 @@
 ---
 <!-- /ix-docs-ignore -->
 
+- [Installation](#installation)
+  - [Standalone](#standalone)
+  - [Using Composer](#using-composer)
 - [Usage](#usage)
 - [Signed URLs](#signed-urls)
 - [Srcset Generation](#srcset-generation)
@@ -21,11 +24,28 @@
     - [Width Ranges](#width-ranges)
     - [Width Tolerance](#width-tolerance)
 - [The `ixlib` Parameter](#the-ixlib-parameter)
-- [Installation](#installation)
-  - [Standalone](#standalone)
-  - [Using Composer](#using-composer)
 - [Testing](#testing)
   - [Dependencies](#dependencies)
+
+## Installation
+
+### Standalone
+
+Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
+
+### Using Composer
+
+Define the following requirement in your `composer.json` file:
+
+```json
+{
+  "require": {
+    "imgix/imgix-php": "dev-master"
+  }
+}
+```
+
+And include the global `vendor/autoload.php` autoloader.
 
 ## Usage
 
@@ -227,26 +247,6 @@ $builder = new UrlBuilder("demo.imgix.net", true, "", false);
 // Or by calling `setIncludeLibraryParam`
 $builder->setIncludeLibraryParam(false);
 ```
-
-## Installation
-
-### Standalone
-
-Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
-
-### Using Composer
-
-Define the following requirement in your `composer.json` file:
-
-```json
-{
-  "require": {
-    "imgix/imgix-php": "dev-master"
-  }
-}
-```
-
-And include the global `vendor/autoload.php` autoloader.
 
 ## Testing
 
