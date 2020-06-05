@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.0"></a>
+
+## [3.3.0](https://github.com/imgix/imgix-php/compare/3.2.0...3.3.0) (2020-06-05)
+* fix: normalize behavior of target widths ([#56](https://github.com/imgix/imgix-php/pull/56))
+* fix: remove ensure even requirement ([#57](https://github.com/imgix/imgix-php/pull/57))
+* feat: create custom srcsets ([#58](https://github.com/imgix/imgix-php/pull/58))
+* feat: validate custom srcsets ([#61](https://github.com/imgix/imgix-php/pull/61))
+
 <a name="3.2.0"></a>
 
 ## [3.2.0](https://github.com/imgix/imgix-php/compare/3.1.0...3.2.0) (2020-03-31)
