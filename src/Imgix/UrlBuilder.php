@@ -2,6 +2,8 @@
 
 namespace Imgix;
 
+use Imgix\Validator;
+
 class UrlBuilder {
 
     private $currentVersion = "3.2.0";
@@ -82,6 +84,7 @@ class UrlBuilder {
         $widthsArray = isset($options['widths']) ? $options['widths'] : NULL;
 
         if (isset($widthsArray)) {
+            Validator::validateWidths($widthsArray);
             return $this->createSrcSetPairs($path, $params=$params, $widthsArray);
         }
         
@@ -130,6 +133,7 @@ class UrlBuilder {
             return array((int) $start);
         }
 
+        Validator::validateMinMaxTol($start, $stop, $tol);
         $resolutions = array();
 
         while ($start < $stop && $start < self::MAX_WIDTH) {
