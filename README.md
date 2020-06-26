@@ -4,9 +4,9 @@
 `imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/). It is tested under PHP versions `5.6`, `7.0`, `7.1`, and `7.2`
 
 [![Version](https://img.shields.io/packagist/v/imgix/imgix-php.svg)](https://packagist.org/packages/imgix/imgix-php)
-[![Build Status](https://travis-ci.org/imgix/imgix-php.svg?branch=master)](https://travis-ci.org/imgix/imgix-php)
+[![Build Status](https://travis-ci.org/imgix/imgix-php.svg?branch=main)](https://travis-ci.org/imgix/imgix-php)
 [![Downloads](https://img.shields.io/packagist/dt/imgix/imgix-php)](https://packagist.org/packages/imgix/imgix-php)
-[![License](https://img.shields.io/github/license/imgix/imgix-php)](https://github.com/imgix/imgix-php/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/imgix/imgix-php)](https://github.com/imgix/imgix-php/blob/main/LICENSE)
 
 ---
 <!-- /ix-docs-ignore -->
@@ -40,7 +40,7 @@ Define the following requirement in your `composer.json` file:
 ```json
 {
   "require": {
-    "imgix/imgix-php": "dev-master"
+    "imgix/imgix-php": "dev-main"
   }
 }
 ```
