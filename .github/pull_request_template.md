@@ -43,7 +43,7 @@ Related issue: [e.g. #42]
 
 Code:
 
-```js
+```php
 // A standalone JS example of what the PR solves
 ```
 
