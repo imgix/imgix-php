@@ -44,7 +44,7 @@ Related issue: [e.g. #42]
 Code:
 
 ```php
-// A standalone JS example of what the PR solves
+// A standalone example of what the PR solves
 ```
 
 <!-- A link to a codepen/codesandbox is also an option. -->
