@@ -276,7 +276,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=108 108w';
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
             
-            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
             
             $devicePixelRatio += 1;
         }
@@ -380,7 +380,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertRegExp("/s=/", $url);
+            $this->assertMatchesRegularExpression("/s=/", $url);
 
             // parse out query params
             $params = substr($url, strrpos($url, "?"));
@@ -407,7 +407,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
         $srclist = explode(",", $srcset);
 
         foreach ($srclist as $src) {
-            $this->assertRegExp("/h=300/", $src);
+            $this->assertMatchesRegularExpression("/h=300/", $src);
         }
     }
 
@@ -451,7 +451,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
         }, $srclist);
 
         foreach ($srcs as $src) {
-            $this->assertRegExp("/s=/", $src);
+            $this->assertMatchesRegularExpression("/s=/", $src);
 
             // parse out query params
             $params = substr($src, strrpos($src, "?"));
@@ -478,7 +478,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
             
-            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
             
             $devicePixelRatio += 1;
         }
@@ -490,7 +490,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertRegExp("/s=/", $url);
+            $this->assertMatchesRegularExpression("/s=/", $url);
             
             // parse out query params
             $params = substr($url, strrpos($url, "?"));
@@ -552,7 +552,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
         }, $srclist);
 
         foreach ($srcs as $src) {
-            $this->assertRegExp("/s=/", $src);
+            $this->assertMatchesRegularExpression("/s=/", $src);
 
             // parse out query params
             $params = substr($src, strrpos($src, "?"));
@@ -579,7 +579,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
             
-            $this->assertRegExp("/dpr=".$devicePixelRatio."/", $generatedURL);
+            $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
             
             $devicePixelRatio += 1;
         }
@@ -591,7 +591,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
 
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
-            $this->assertRegExp("/s=/", $url);
+            $this->assertMatchesRegularExpression("/s=/", $url);
  
             // parse out query params
             $params = substr($url, strrpos($url, "?"));
