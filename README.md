@@ -29,10 +29,6 @@
 
 ## Installation
 
-### Standalone
-
-Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
-
 ### Using Composer
 
 Define the following requirement in your `composer.json` file:
@@ -46,6 +42,10 @@ Define the following requirement in your `composer.json` file:
 ```
 
 And include the global `vendor/autoload.php` autoloader.
+
+### Standalone
+
+Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
 
 ## Usage
 
