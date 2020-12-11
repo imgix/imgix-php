@@ -247,13 +247,3 @@ $builder = new UrlBuilder("demo.imgix.net", true, "", false);
 // Or by calling `setIncludeLibraryParam`
 $builder->setIncludeLibraryParam(false);
 ```
-
-## Testing
-
-### Dependencies
-
-The tests have a few external dependencies. To install and run the test suite run:
-
-```bash
-phpunit --bootstrap src/autoload.php tests/
-```
