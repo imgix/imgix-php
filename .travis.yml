@@ -4,14 +4,5 @@ php:
   - '7.3'
   - '7.4'
   - '8.0'
-before_script:
-- |
-  echo "TRAVIS_PHP_VERSION:" $TRAVIS_PHP_VERSION;
-  php -v;
-  php -r 'echo "PHP: ".PHP_VERSION."\n";';
-  if [ $(echo "$TRAVIS_PHP_VERSION >= 7.0" | bc -l) -eq 1 ]; then
-    echo using PHPUnit 6.5.9
-    curl -sSfL -o ~/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit https://phar.phpunit.de/phpunit-6.5.9.phar;
-  fi
 install:
   - composer install
