@@ -7,25 +7,25 @@
 [![Build Status](https://travis-ci.com/imgix/imgix-php.svg?branch=main)](https://travis-ci.com/imgix/imgix-php)
 [![Downloads](https://img.shields.io/packagist/dt/imgix/imgix-php)](https://packagist.org/packages/imgix/imgix-php)
 [![License](https://img.shields.io/github/license/imgix/imgix-php)](https://github.com/imgix/imgix-php/blob/main/LICENSE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php?ref=badge_shield)
 
 ---
 <!-- /ix-docs-ignore -->
 
 - [Installation](#installation)
-  - [Standalone](#standalone)
-  - [Using Composer](#using-composer)
+    * [Using Composer](#using-composer)
+    * [Standalone](#standalone)
 - [Usage](#usage)
 - [Signed URLs](#signed-urls)
 - [Srcset Generation](#srcset-generation)
-  - [Fixed-Width Images](#fixed-width-images)
-    - [Variable Quality](#variable-quality)
-  - [Fluid-Width Images](#fluid-width-images)
-    - [Custom Widths](#custom-widths)
-    - [Width Ranges](#width-ranges)
-    - [Width Tolerance](#width-tolerance)
+    * [Fixed-Width Images](#fixed-width-images)
+        + [Variable Quality](#variable-quality)
+    * [Fluid-Width Images](#fluid-width-images)
+        + [Custom Widths](#custom-widths)
+        + [Width Ranges](#width-ranges)
+        + [Width Tolerance](#width-tolerance)
 - [The `ixlib` Parameter](#the-ixlib-parameter)
-- [Testing](#testing)
-  - [Dependencies](#dependencies)
+- [License](#license)
 
 ## Installation
 
@@ -247,3 +247,6 @@ $builder = new UrlBuilder("demo.imgix.net", true, "", false);
 // Or by calling `setIncludeLibraryParam`
 $builder->setIncludeLibraryParam(false);
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php?ref=badge_large)
