@@ -165,7 +165,7 @@ class UrlBuilder {
         // If `params` have a width param or _both_ height and aspect
         // ratio parameters then the srcset to be constructed with
         // these params _is dpr based
-        return $hasWidth || ($hasHeight && $hasAspectRatio);
+        return $hasWidth || $hasHeight;
     }
 
     private function createDPRSrcSet($path, $params, $disableVariableQuality=false) {
