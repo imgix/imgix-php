@@ -421,38 +421,15 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.0&w=535 535w';
         }
     }
 
-    // TODO(luis): remove this, test no longer relevant for h only srcsets
-    // public function testGivenHeightSrcsetPairsWithinBounds() {
-    //     $srcset = $this->srcsetBuilder(array("h"=>300));
-    //     $srclist = explode(",", $srcset);
+    public function testHeightIncludesDPRParam() {
+        $srcset = $this->srcsetBuilder(array("h"=>300));
+        $srclist = explode(",", $srcset);
 
-    //     $minParsed = explode(" ", $srclist[0])[1];
-    //     $maxParsed = explode(" ", $srclist[count($srclist)-1])[1];
-    //     $min = $this->parseWidth($minParsed);
-    //     $max = $this->parseWidth($maxParsed);
-
-    //     $this->assertGreaterThanOrEqual(100, $min);
-    //     $this->assertLessThanOrEqual(8192, $max);
-    // }
-
-    // TODO(luis): remove this, test no longer relevant for h only srcsets
-    // public function testGivenHeightSrcsetIteratesEighteenPercent() {
-    //     $incrementAllowed = .18;
-    //     $srcset = $this->srcsetBuilder(array("h"=>300));
-    //     $srclist = explode(",", $srcset);
-
-    //     $widths = array_map(function ($src) {
-    //         return $this->parseWidth(explode(" ", $src)[1]);
-    //     }, $srclist);
-
-    //     $prev = $widths[0];
-    //     $size = count($widths);
-    //     for ($i = 1; $i < $size; $i++) {
-    //         $width = $widths[$i];
-    //         $this->assertLessThan((1 + $incrementAllowed), ($width / $prev));
-    //         $prev = $width;
-    //     }
-    // }
+        foreach ($srclist as $i=>$src) {
+            $dpr = explode(" ", $src)[0];
+            $this->assertMatchesRegularExpression("/dpr=/", $dpr);
+        }
+    }
 
     public function testGivenHeightSrcsetSignsUrls() {
         $srcset = $this->srcsetBuilder(array("h"=>300));
