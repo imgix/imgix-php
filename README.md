@@ -110,9 +110,9 @@ https://demos.imgix.net/image.png?w=8192&s=a0fed46e2bbcc70ded13dc629aee5398 8192
 
 ### Fixed-Width Images
 
-In cases where enough information is provided about an image's dimensions, `createSrcSet` will instead build a srcset that will allow for an image to be served at different resolutions. The parameters taken into consideration when determining if an image is fixed-width are `w`, `h`, and `ar`.
+In cases where enough information is provided about an image's dimensions, `createSrcSet` will instead build a srcset that will allow for an image to be served at different resolutions. The parameters taken into consideration when determining if an image is fixed-width are `w` and `h`.
 
-By invoking `createSrcSet` with either a width **or** the height and aspect ratio (along with `fit=crop`, typically) provided, a different srcset will be generated for a fixed-width image instead.
+By invoking `createSrcSet` with either a width **or** height provided, a different srcset will be generated for a fixed-width image instead.
 
 ```php
 $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
