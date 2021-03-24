@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.1"></a>
+
+## [3.3.1](https://github.com/imgix/imgix-php/compare/3.3.0...3.3.1) (2021-03-24)
+* docs: update fixed-widths section  ([#77](https://github.com/imgix/imgix-php/pull/77))
+* fix: dpr srcset when only h param  ([#76](https://github.com/imgix/imgix-php/pull/76))
+* docs: update travis badge to travis-ci.com  ([#74](https://github.com/imgix/imgix-php/pull/74))
+* docs: reorder install instruction to promote usage of composer ([#72](https://github.com/imgix/imgix-php/pull/72))
+
 <a name="3.3.0"></a>
 
 ## [3.3.0](https://github.com/imgix/imgix-php/compare/3.2.0...3.3.0) (2020-06-05)
