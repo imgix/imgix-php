@@ -6,7 +6,7 @@ use Imgix\Validator;
 
 class UrlBuilder {
 
-    private $currentVersion = "3.3.0";
+    private $currentVersion = "3.3.1";
     private $domain;
     private $useHttps;
     private $signKey;
