@@ -117,5 +117,3 @@ class UrlHelperTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?w=500&s=e4eb402d12bbdf267bf0fc5588170d56", $uh->getURL());
     }
 }
-
-?>
