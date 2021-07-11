@@ -597,4 +597,3 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
     }
 
   }
-?>
