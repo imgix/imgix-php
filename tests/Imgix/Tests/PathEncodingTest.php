@@ -31,4 +31,3 @@ class PathEncodingTest extends \PHPUnit\Framework\TestCase {
     }
 
   }
-?>

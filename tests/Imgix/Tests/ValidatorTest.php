@@ -60,4 +60,3 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase {
         Validator::validateWidths([]);
     }
 }
-?>
