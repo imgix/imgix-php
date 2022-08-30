@@ -81,4 +81,3 @@ https://demo.imgix.net/image.jpg?w=384 384w';
         $this->assertEquals($expected, $actual);
     }
 }
-?>
