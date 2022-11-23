@@ -7,7 +7,7 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase {
     public function testFixedWithImages() {
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
         $actual = $builder->createSrcSet("image.png", array("h"=>800, "ar"=>"3:2", "fit"=>"crop"));
-        $expected = 
+        $expected =
 "https://demos.imgix.net/image.png?ar=3%3A2&dpr=1&fit=crop&h=800&q=75&s=b6b4a327a9e5a9ce5c9251b736c98633 1x,
 https://demos.imgix.net/image.png?ar=3%3A2&dpr=2&fit=crop&h=800&q=50&s=4f96c2dffa682c081ba9b994c49222cc 2x,
 https://demos.imgix.net/image.png?ar=3%3A2&dpr=3&fit=crop&h=800&q=35&s=7b2a069e769cfeaf9e6dbb4679aea2bc 3x,
@@ -51,7 +51,7 @@ https://demos.imgix.net/image.jpg?w=640 640w';
         $builder = new UrlBuilder("demo.imgix.net", true, "", false);
         $opts = array('start' => 500, 'stop' => 2000);
         $actual = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
-        $expected = 
+        $expected =
 'https://demo.imgix.net/image.jpg?w=500 500w,
 https://demo.imgix.net/image.jpg?w=580 580w,
 https://demo.imgix.net/image.jpg?w=673 673w,
@@ -71,7 +71,7 @@ https://demo.imgix.net/image.jpg?w=2000 2000w';
         $builder = new UrlBuilder("demo.imgix.net", true, "", false);
         $opts = array('start' => 100, 'stop' => 384, 'tol' => 0.20);
         $actual = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
-        $expected = 
+        $expected =
 'https://demo.imgix.net/image.jpg?w=100 100w,
 https://demo.imgix.net/image.jpg?w=140 140w,
 https://demo.imgix.net/image.jpg?w=196 196w,

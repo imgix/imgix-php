@@ -88,7 +88,7 @@ $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
 echo $builder->createSrcSet("image.png");
 ```
 
-The above will produce the following srcset attribute value which can then be served to the client: 
+The above will produce the following srcset attribute value which can then be served to the client:
 
 ``` html
 https://demos.imgix.net/image.png?w=100&s=e415797545a77a9d2842dedcfe539c9a 100w,

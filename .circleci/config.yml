@@ -1,12 +1,12 @@
 version: 2.1 # Use 2.1 to enable using orbs and other features.
- 
-orbs: 
+
+orbs:
   php: circleci/php@1.1.0
 
 jobs:
   test:
     parameters:
-      version: 
+      version:
         default: "8.0"
         description: PHP version to install
         type: string
@@ -27,15 +27,15 @@ jobs:
             equal: [ "8.1", <<parameters.version>> ]
           steps:
             - run: composer update
-      
+
       # install deps
       - run: composer install
 
       # run tests
-      - run: 
+      - run:
           name: PHPUnit Tests
           command: vendor/bin/phpunit --bootstrap src/autoload.php tests
- 
+
 workflows:
   version: 2
   test:
