@@ -13,7 +13,7 @@ class Validator {
 
     public static function validateMaxWidth($end) {
         if ($end < 0) {
-            throw new \InvalidArgumentException("`stop` width value must be greater than zero"); 
+            throw new \InvalidArgumentException("`stop` width value must be greater than zero");
         }
     }
 
@@ -25,7 +25,7 @@ class Validator {
 
         // Ensure that the range is valid, ie. `begin <= end`.
         if ($start > $stop) {
-            throw new \InvalidArgumentException("`start` width value must be less than `stop` width value"); 
+            throw new \InvalidArgumentException("`start` width value must be less than `stop` width value");
         }
     }
 

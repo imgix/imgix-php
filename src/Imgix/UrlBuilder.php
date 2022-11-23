@@ -37,7 +37,7 @@ class UrlBuilder {
         }
 
         $this->domain = $domain;
-        $this->validateDomain($this->domain);        
+        $this->validateDomain($this->domain);
 
         $this->useHttps = $useHttps;
         $this->signKey = $signKey;
@@ -49,9 +49,9 @@ class UrlBuilder {
         $DOMAIN_PATTERN = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
 
         if(!preg_match($DOMAIN_PATTERN, $domain)) {
-            throw new \InvalidArgumentException('Domain must be passed in as fully-qualified ' . 
+            throw new \InvalidArgumentException('Domain must be passed in as fully-qualified ' .
             'domain name and should not include a protocol or any path element, i.e. ' .
-            '"example.imgix.net".'); 
+            '"example.imgix.net".');
         }
     }
 
@@ -87,7 +87,7 @@ class UrlBuilder {
             Validator::validateWidths($widthsArray);
             return $this->createSrcSetPairs($path, $params=$params, $widthsArray);
         }
-        
+
         $_start = isset($options['start']) ? $options['start'] : self::MIN_WIDTH;
         $_stop = isset($options['stop']) ? $options['stop'] : self::MAX_WIDTH;
         $_tol = isset($options['tol']) ? $options['tol'] : self::SRCSET_WIDTH_TOLERANCE;
@@ -96,8 +96,8 @@ class UrlBuilder {
 
         if ($this->isDpr($params)) {
             return $this->createDPRSrcSet(
-                $path=$path, 
-                $params=$params, 
+                $path=$path,
+                $params=$params,
                 $disableVariableQuality=$_disableVariableQuality);
         }
         else {
@@ -108,17 +108,17 @@ class UrlBuilder {
 
     /**
      * Generate a list of target widths.
-     * 
+     *
      * This function generates an array of target widths used to
      * width-describe image candidate strings (URLs) within a
      * srcset attribute.
-     * 
+     *
      * This function returns an array of integer values that denote
      * image target widths. This array begins with `$start`
      * and ends with `$stop`. The `$tol` or tolerance value dictates
      * the amount of tolerable width variation between each width
      * in the range of values that lie between `$start` and `$stop`.
-     * 
+     *
      * @param  int $start Starting minimum width value.
      * @param  int $stop Stopping maximum width value.
      * @param  int $tol Tolerable amount of width variation.
@@ -147,7 +147,7 @@ class UrlBuilder {
         if (end($resolutions) < $stop) {
             array_push($resolutions, (int) $stop);
         }
-        
+
         return $resolutions;
     }
 

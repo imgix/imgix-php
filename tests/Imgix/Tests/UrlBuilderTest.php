@@ -36,7 +36,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
         // Construct a url in accordance with the other tests.
         $params = array("w" => 100, "h" => 100);
         // Create the url with the specified `$path` and `$params`.
-        $url = $builder->createURL("bridge.png", $params); 
+        $url = $builder->createURL("bridge.png", $params);
         $this->assertEquals("https://demos.imgix.net/bridge.png?h=100&w=100", $url);
     }
 
@@ -135,7 +135,7 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     public function test_invalid_domain_append_slash() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' .
         'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
 
@@ -144,25 +144,25 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     public function test_invalid_domain_prepend_scheme() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' .
         'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
-        
+
         $builder = new UrlBuilder("https://demos.imgix.net", true, "",  false);
     }
-    
+
     public function test_invalid_domain_append_dash() {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' . 
+        $this->expectExceptionMessage('Domain must be passed in as fully-qualified ' .
         'domain name and should not include a protocol or any path element, i.e. ' .
         '"example.imgix.net".');
-        
+
         $builder = new UrlBuilder("demos.imgix.net-", true, "",  false);
     }
 
     private function srcsetBuilder($params=array()) {
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-        return $builder->createSrcSet("bridge.png", $params); 
+        return $builder->createSrcSet("bridge.png", $params);
     }
 
     // parse the width as an int, eg "100w" => 100
@@ -196,11 +196,11 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
     public function testTargetWidthsMaxTolerance() {
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-        $expected = array(0 => 100, 1 => 8192); 
+        $expected = array(0 => 100, 1 => 8192);
         $actual = $builder->targetWidths($start=100, $stop=8192, $tol=10000000);
         $this->assertEquals($expected, $actual);
     }
-    
+
     public function testNoParametersGeneratesSrcsetPairs() {
         $srcset = $this->srcsetBuilder();
         $expectedNumberOfPairs = 31;
@@ -217,8 +217,8 @@ class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
 
         $builder = new UrlBuilder("demos.imgix.net", true, false);
         $actual = $builder->createSrcSet(
-            $path="image.jpg", 
-            $params=array(), 
+            $path="image.jpg",
+            $params=array(),
             $options=array('start' => 720, 'stop' => 720));
 
         $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=720 720w';
@@ -254,10 +254,10 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=108 108w';
         $resolutions = self::TARGET_WIDTHS;
         $srclist = explode(",", $srcset);
         $matches = array();
-        
+
         foreach ($srclist as $src) {
             $width = explode(" ", $src)[1];
-            
+
             // extract width int values
             preg_match("/\d+/", $width, $matches);
             $this->assertEquals($resolutions[$index], $matches[0]);
@@ -272,12 +272,12 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=108 108w';
 
         foreach ($srclist as $src) {
             list($generatedURL, $generatedRatio) = explode(" ", $src);
-            
+
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
-            
+
             $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
-            
+
             $devicePixelRatio += 1;
         }
     }
@@ -455,7 +455,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
             $this->assertEquals($expectSignature, $generatedSignature);
         }
     }
-    
+
     public function testGivenWidthAndHeightSrcsetIsDPR() {
         $srcset = $this->srcsetBuilder(array("w"=>300, "h"=>"400"));
         $devicePixelRatio = 1;
@@ -463,12 +463,12 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
 
         foreach ($srclist as $src) {
             list($generatedURL, $generatedRatio) = explode(" ", $src);
-            
+
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
-            
+
             $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
-            
+
             $devicePixelRatio += 1;
         }
     }
@@ -480,7 +480,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
             $this->assertMatchesRegularExpression("/s=/", $url);
-            
+
             // parse out query params
             $params = substr($url, strrpos($url, "?"));
             $params = substr($params, 0, strrpos($params, "s=")-1);
@@ -564,12 +564,12 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
 
         foreach ($srclist as $src) {
             list($generatedURL, $generatedRatio) = explode(" ", $src);
-            
+
             $dprStr = $devicePixelRatio . "x";
             $this->assertEquals($dprStr, $generatedRatio);
-            
+
             $this->assertMatchesRegularExpression("/dpr=".$devicePixelRatio."/", $generatedURL);
-            
+
             $devicePixelRatio += 1;
         }
     }
@@ -581,7 +581,7 @@ https://demos.imgix.net/image.jpg?ixlib=php-3.3.1&w=535 535w';
         foreach ($srclist as $src) {
             $url = explode(" ", $src)[0];
             $this->assertMatchesRegularExpression("/s=/", $url);
- 
+
             // parse out query params
             $params = substr($url, strrpos($url, "?"));
             $params = substr($params, 0, strrpos($params, "s=")-1);
