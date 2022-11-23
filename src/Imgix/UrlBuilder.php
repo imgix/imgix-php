@@ -2,8 +2,6 @@
 
 namespace Imgix;
 
-use Imgix\Validator;
-
 class UrlBuilder {
 
     private $currentVersion = "3.3.1";
