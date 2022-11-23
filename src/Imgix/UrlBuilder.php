@@ -25,9 +25,6 @@ class UrlBuilder {
     const MAX_WIDTH = 8192;
     const SRCSET_WIDTH_TOLERANCE = 0.08;
 
-    // constants cannot be dynamically assigned; keeping as a class variable instead
-    private $targetWidths;
-
     public function __construct($domain, $useHttps = true, $signKey = "", $includeLibraryParam = true) {
 
         if (!is_string($domain)) {
@@ -40,7 +37,6 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
         $this->signKey = $signKey;
         $this->includeLibraryParam = $includeLibraryParam;
-        $this->targetWidths = $this->targetWidths();
     }
 
     private function validateDomain($domain) {
