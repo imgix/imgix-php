@@ -37,18 +37,6 @@ Install through composer with:
 composer require imgix/imgix-php
 ```
 
-Or just define the following requirement in your `composer.json` file:
-
-```json
-{
-  "require": {
-    "imgix/imgix-php": "dev-main"
-  }
-}
-```
-
-And include the global `vendor/autoload.php` autoloader.
-
 ### Standalone
 
 Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
