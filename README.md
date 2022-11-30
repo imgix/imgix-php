@@ -37,9 +37,6 @@ Install through composer with:
 composer require imgix/imgix-php
 ```
 
-### Standalone
-
-Just copy the files to your project, and include the `src/autoload.php` file. We recommend using Composer if at all possible.
 
 ## Usage
 
