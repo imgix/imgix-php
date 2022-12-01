@@ -33,7 +33,6 @@ You can install the package via composer:
 composer require imgix/imgix-php
 ```
 
-
 ## Usage
 
 To begin creating imgix URLs programmatically, add the php files to your project (an example autoloader is also provided). The URL builder can be reused to create URLs for any
