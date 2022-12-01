@@ -14,8 +14,13 @@
     "phpunit/phpunit": "*"
   },
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "Imgix\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Imgix\\Tests\\": "tests/"
     }
   }
 }
