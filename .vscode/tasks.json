@@ -13,8 +13,7 @@
     {
       "label": "phpunit: test",
       "type": "shell",
-      "command": "phpunit",
-      "args": ["--bootstrap", "src/autoload.php", "tests"],
+      "command": "vendor/bin/phpunit",
       "group": {
         "kind": "test",
         "isDefault": true
