@@ -120,5 +120,5 @@ Run `php composer.phar i` to install deps
 
 Commands:
 
-- Run unit tests: `./vendor/bin/phpunit --bootstrap src/autoload.php tests`
+- Run unit tests: `./vendor/bin/phpunit`
 - Update dependencies: `php composer.phar u`

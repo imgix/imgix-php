@@ -34,8 +34,8 @@ jobs:
       # run tests
       - run:
           name: PHPUnit Tests
-          command: vendor/bin/phpunit --bootstrap src/autoload.php tests
-
+          command: vendor/bin/phpunit
+ 
 workflows:
   version: 2
   test:
