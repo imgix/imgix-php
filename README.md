@@ -33,7 +33,6 @@ You can install the package via composer:
 composer require imgix/imgix-php
 ```
 
-
 ## Usage
 
 To begin creating imgix URLs programmatically, add the php files to your project (an example autoloader is also provided). The URL builder can be reused to create URLs for any
@@ -84,7 +83,7 @@ $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
 echo $builder->createSrcSet("image.png");
 ```
 
-The above will produce the following srcset attribute value which can then be served to the client: 
+The above will produce the following srcset attribute value which can then be served to the client:
 
 ``` html
 https://demos.imgix.net/image.png?w=100&s=e415797545a77a9d2842dedcfe539c9a 100w,
