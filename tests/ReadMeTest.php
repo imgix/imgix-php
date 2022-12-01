@@ -1,8 +1,11 @@
 <?php
 
-use Imgix\UrlBuilder;
+namespace Imgix\Tests;
 
-class ReadMeTest extends \PHPUnit\Framework\TestCase {
+use Imgix\UrlBuilder;
+use PHPUnit\Framework\TestCase;
+
+class ReadMeTest extends TestCase {
 
     public function testFixedWithImages() {
         $builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);

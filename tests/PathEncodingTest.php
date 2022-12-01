@@ -1,8 +1,11 @@
 <?php
 
-use Imgix\UrlBuilder;
+namespace Imgix\Tests;
 
-class PathEncodingTest extends \PHPUnit\Framework\TestCase {
+use Imgix\UrlBuilder;
+use PHPUnit\Framework\TestCase;
+
+class PathEncodingTest extends TestCase {
   // NOTE: all the expected urls bellow resolve to an actual image.
     const HOST = "sdk-test.imgix.net";
 
