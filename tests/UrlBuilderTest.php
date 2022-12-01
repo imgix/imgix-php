@@ -1,8 +1,12 @@
 <?php
 
-use Imgix\UrlBuilder;
+namespace Imgix\Tests;
 
-class UrlBuilderTest extends \PHPUnit\Framework\TestCase {
+use Imgix\UrlBuilder;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+
+class UrlBuilderTest extends TestCase {
 
 
     const TARGET_WIDTHS = array(

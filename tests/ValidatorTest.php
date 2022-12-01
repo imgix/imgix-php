@@ -1,8 +1,12 @@
 <?php
 
-use Imgix\Validator;
+namespace Imgix\Tests;
 
-class ValidatorTest extends \PHPUnit\Framework\TestCase {
+use Imgix\Validator;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+
+class ValidatorTest extends TestCase {
     const LESS_THAN_ZERO = -1;
     /**
      * Test `validateMinWidth` throws if passed a value less than
