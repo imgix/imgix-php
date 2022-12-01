@@ -13,8 +13,6 @@
 <!-- /ix-docs-ignore -->
 
 - [Installation](#installation)
-    * [Using Composer](#using-composer)
-    * [Standalone](#standalone)
 - [Usage](#usage)
 - [Signed URLs](#signed-urls)
 - [Srcset Generation](#srcset-generation)
@@ -28,8 +26,6 @@
 - [License](#license)
 
 ## Installation
-
-### Using Composer
 
 Install through composer with:
 
