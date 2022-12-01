@@ -27,7 +27,7 @@
 
 ## Installation
 
-Install through composer with:
+You can install the package via composer:
 
 ```bash
 composer require imgix/imgix-php
