@@ -1,8 +1,11 @@
 <?php
 
-use Imgix\UrlHelper;
+namespace Imgix\Tests;
 
-class UrlHelperTest extends \PHPUnit\Framework\TestCase {
+use Imgix\UrlHelper;
+use PHPUnit\Framework\TestCase;
+
+class UrlHelperTest extends TestCase {
 
     /*--- formatPath() ---*/
     public function testHelperFormatPathWithSimplePath() {
