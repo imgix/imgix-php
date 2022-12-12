@@ -1,7 +1,7 @@
 <!-- ix-docs-ignore -->
 ![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
 
-`imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/). It is tested under PHP versions `8.0` and `8.1`.
+`imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/). It is tested under PHP versions `8.0`, `8.1` and `8.2`.
 
 [![Version](https://img.shields.io/packagist/v/imgix/imgix-php.svg)](https://packagist.org/packages/imgix/imgix-php)
 [![Build Status](https://circleci.com/gh/imgix/imgix-php.svg?style=shield)](https://circleci.com/gh/imgix/imgix-php)
