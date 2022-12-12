@@ -27,6 +27,11 @@ jobs:
             equal: ["8.1", <<parameters.version>>]
           steps:
             - run: composer update
+      - when:
+          condition:
+            equal: ["8.2", <<parameters.version>>]
+          steps:
+            - run: composer update
 
       # install deps
       - run: composer install
@@ -35,7 +40,7 @@ jobs:
       - run:
           name: PHPUnit Tests
           command: vendor/bin/phpunit
- 
+
 workflows:
   version: 2
   test:
@@ -46,3 +51,4 @@ workflows:
               version:
                 - "8.0"
                 - "8.1"
+                - "8.2"
