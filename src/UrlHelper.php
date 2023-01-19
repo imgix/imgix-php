@@ -2,15 +2,20 @@
 
 namespace Imgix;
 
-class UrlHelper {
-
+class UrlHelper
+{
     private $domain;
+
     private $path;
+
     private $scheme;
+
     private $signKey;
+
     private $params;
 
-    public function __construct($domain, $path, $scheme = "http", $signKey = "", $params = array()) {
+    public function __construct($domain, $path, $scheme = 'http', $signKey = '', $params = [])
+    {
         $this->domain = $domain;
         $this->path = $this->formatPath($path);
         $this->scheme = $scheme;
@@ -18,17 +23,19 @@ class UrlHelper {
         $this->params = $params;
     }
 
-    public function formatPath($path) {
-        if (!is_string($path) || strlen($path) < 1)
+    public function formatPath($path)
+    {
+        if (! is_string($path) || strlen($path) < 1) {
             return '/';
+        }
 
         // Strip leading slash first (we'll re-add after encoding)
-        $path = preg_replace("/^\//", "", $path);
+        $path = preg_replace("/^\//", '', $path);
 
         if (preg_match("/^https?:\/\//", $path)) {
             // If this path is a full URL, encode the entire thing
             $path = rawurlencode($path);
-        } else if (preg_match("/^https?:\/\/[^\s\/$.?#]*\.[^\s]*$/", rawurldecode($path))) {
+        } elseif (preg_match("/^https?:\/\/[^\s\/$.?#]*\.[^\s]*$/", rawurldecode($path))) {
             // Using @stephenhay's solution from https://mathiasbynens.be/demo/url-regex
             // to ensure URL's validity.
             // $path looks like a valid encoded URL, however, it may still have
@@ -44,10 +51,11 @@ class UrlHelper {
         }
 
         // Add a leading slash before returning
-        return '/' . $path;
+        return '/'.$path;
     }
 
-    public function setParameter($key, $value) {
+    public function setParameter($key, $value)
+    {
         if ($key && ($value || $value === 0)) {
             $this->params[$key] = $value;
         } else {
@@ -57,12 +65,14 @@ class UrlHelper {
         }
     }
 
-    public function deleteParameter($key) {
+    public function deleteParameter($key)
+    {
         unset($this->params[$key]);
     }
 
-    public function getURL() {
-        $queryPairs = array();
+    public function getURL()
+    {
+        $queryPairs = [];
 
         if ($this->params) {
             ksort($this->params);
@@ -71,38 +81,40 @@ class UrlHelper {
                 if (substr($key, -2) === '64') {
                     $encodedVal = self::base64url_encode($val);
                 } else {
-                    $encodedVal = is_array($val) ? rawurlencode(implode(',',$val)) : rawurlencode($val);
+                    $encodedVal = is_array($val) ? rawurlencode(implode(',', $val)) : rawurlencode($val);
                 }
 
-                $queryPairs[] = rawurlencode($key) . "=" . $encodedVal;
+                $queryPairs[] = rawurlencode($key).'='.$encodedVal;
             }
         }
 
-        $query = join("&", $queryPairs);
+        $query = implode('&', $queryPairs);
         if ($query) {
-            $query = '?' . $query;
+            $query = '?'.$query;
         }
 
         if ($this->signKey) {
-            $toSign = $this->signKey . $this->path . $query;
+            $toSign = $this->signKey.$this->path.$query;
             $sig = md5($toSign);
             if ($query) {
-                $query .= "&s=" . $sig;
+                $query .= '&s='.$sig;
             } else {
-                $query = "?s=" . $sig;
+                $query = '?s='.$sig;
             }
         }
 
-        $url_parts = array('scheme' => $this->scheme, 'host' => $this->domain, 'path' => $this->path, 'query' => $query);
+        $url_parts = ['scheme' => $this->scheme, 'host' => $this->domain, 'path' => $this->path, 'query' => $query];
 
         return self::joinURL($url_parts);
     }
 
-    private static function base64url_encode($data) {
+    private static function base64url_encode($data)
+    {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
-    private static function joinURL($parts) {
-        return $parts['scheme'] . '://' . $parts['host'] . $parts['path'] . $parts['query'];
+    private static function joinURL($parts)
+    {
+        return $parts['scheme'].'://'.$parts['host'].$parts['path'].$parts['query'];
     }
 }
