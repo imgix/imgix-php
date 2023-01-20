@@ -63,4 +63,13 @@ class ValidatorTest extends TestCase {
         $this->expectException(InvalidArgumentException::class);
         Validator::validateWidths([]);
     }
+
+    /**
+     * Test `validateWidths` throws if passed negative values.
+     */
+    public function testValidateWidthsNegativeValues()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        Validator::validateWidths([0, -1, 100]);
+    }
 }
