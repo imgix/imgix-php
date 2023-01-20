@@ -124,7 +124,7 @@ class UrlBuilder {
         $stop=self::MAX_WIDTH,
         $tol=self::SRCSET_WIDTH_TOLERANCE) {
 
-        if ($start == $stop) {
+        if ($start === $stop) {
             return array((int) $start);
         }
 

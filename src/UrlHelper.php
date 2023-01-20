@@ -68,7 +68,7 @@ class UrlHelper {
             ksort($this->params);
 
             foreach ($this->params as $key => $val) {
-                if (substr($key, -2) == '64') {
+                if (substr($key, -2) === '64') {
                     $encodedVal = self::base64url_encode($val);
                 } else {
                     $encodedVal = is_array($val) ? rawurlencode(implode(',',$val)) : rawurlencode($val);
