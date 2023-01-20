@@ -8,6 +8,14 @@ use PHPUnit\Framework\TestCase;
 class UrlHelperTest extends TestCase {
 
     /*--- formatPath() ---*/
+    public function testHelperFormatPathWithNoPath()
+    {
+        $path = '';
+        $uh = new URLHelper('test.imgix.net', $path);
+
+        $this->assertEquals($uh->formatPath($path), '/'.$path);
+    }
+
     public function testHelperFormatPathWithSimplePath() {
         $path = "dog.jpg";
         $uh = new URLHelper("test.imgix.net", $path);
@@ -118,5 +126,21 @@ class UrlHelperTest extends TestCase {
         $uh = new URLHelper("imgix-library-secure-test-source.imgix.net", "dog.jpg", "https", "EHFQXiZhxP4wA2c4");
         $uh->setParameter("w", 500);
         $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?w=500&s=e4eb402d12bbdf267bf0fc5588170d56", $uh->getURL());
+    }
+
+    public function testHelperBuildSignedURLWithNullHashSetterParams() {
+        $uh = new URLHelper("imgix-library-secure-test-source.imgix.net", "dog.jpg", "https", "EHFQXiZhxP4wA2c4");
+        $uh->setParameter("w", 500);
+        $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?w=500&s=e4eb402d12bbdf267bf0fc5588170d56", $uh->getURL());
+        $uh->setParameter("w", NULL);
+        $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?s=2b0bc99b1042e3c1c9aae6598acc3def", $uh->getURL());
+    }
+
+    public function testHelperBuildSignedURLWithHashDeleterParams() {
+        $uh = new URLHelper("imgix-library-secure-test-source.imgix.net", "dog.jpg", "https", "EHFQXiZhxP4wA2c4");
+        $uh->setParameter("w", 500);
+        $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?w=500&s=e4eb402d12bbdf267bf0fc5588170d56", $uh->getURL());
+        $uh->deleteParameter("w");
+        $this->assertEquals("https://imgix-library-secure-test-source.imgix.net/dog.jpg?s=2b0bc99b1042e3c1c9aae6598acc3def", $uh->getURL());
     }
 }
