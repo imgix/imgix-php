@@ -47,7 +47,7 @@ class Validator {
             throw new \InvalidArgumentException("`widths` array cannot be `null`");
         }
 
-        if (count($widths) == 0) {
+        if (count($widths) === 0) {
             throw new \InvalidArgumentException("`widths` array cannot be empty");
         }
         foreach ($widths as &$w) {
