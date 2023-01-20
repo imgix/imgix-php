@@ -43,7 +43,7 @@ class Validator {
     }
 
     public static function validateWidths($widths) {
-        if ($widths == NULL) {
+        if (is_null($widths)) {
             throw new \InvalidArgumentException("`widths` array cannot be `null`");
         }
 
