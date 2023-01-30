@@ -135,8 +135,9 @@ class UrlBuilder
     public function targetWidths(
         $start=self::MIN_WIDTH,
         $stop=self::MAX_WIDTH,
-        $tol=self::SRCSET_WIDTH_TOLERANCE) {
-
+        $tol=self::SRCSET_WIDTH_TOLERANCE
+    )
+    {
         if ($start === $stop) {
             return array((int) $start);
         }

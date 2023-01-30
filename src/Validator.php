@@ -48,7 +48,8 @@ class Validator
         Validator::validateTolerance($tol);
     }
 
-    public static function validateWidths($widths) {
+    public static function validateWidths($widths)
+    {
         if (is_null($widths)) {
             throw new \InvalidArgumentException("`widths` array cannot be `null`");
         }
