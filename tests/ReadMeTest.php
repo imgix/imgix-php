@@ -42,7 +42,7 @@ https://demos.imgix.net/image.jpg?dpr=5&q=20&w=100 5x';
     {
         $builder = new UrlBuilder(self::HOST, true, '', false);
 
-        $actual = $builder->createSrcSet('image.jpg', [], ['widths' => [144, 240 ,320 ,446, 640]]);
+        $actual = $builder->createSrcSet('image.jpg', [], ['widths' => [144, 240, 320, 446, 640]]);
         $expected =
 'https://demos.imgix.net/image.jpg?w=144 144w,
 https://demos.imgix.net/image.jpg?w=240 240w,
