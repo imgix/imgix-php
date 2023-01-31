@@ -4,7 +4,7 @@ namespace Imgix;
 
 class UrlBuilder
 {
-    private $currentVersion = "4.0.0";
+    private $currentVersion = "4.1.0";
     private $domain;
 
     private $useHttps;
@@ -136,8 +136,7 @@ class UrlBuilder
         $start=self::MIN_WIDTH,
         $stop=self::MAX_WIDTH,
         $tol=self::SRCSET_WIDTH_TOLERANCE
-    )
-    {
+    ) {
         if ($start === $stop) {
             return array((int) $start);
         }
