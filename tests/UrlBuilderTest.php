@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class UrlBuilderTest extends TestCase
 {
-    public const PACKAGE_VERSION = '4.0.0';
+    public const PACKAGE_VERSION = '4.1.0';
     public const TARGET_WIDTHS = [
         100, 116, 135, 156, 181, 210, 244, 283,
         328, 380, 441, 512, 594, 689, 799, 927,
