@@ -153,8 +153,8 @@ class UrlBuilder
             return false;
         }
 
-        $hasWidth = array_key_exists('w', $params) ? $params['w'] : null;
-        $hasHeight = array_key_exists('h', $params) ? $params['h'] : null;
+        $hasWidth = $params['w'] ?? null;
+        $hasHeight = $params['h'] ?? null;
 
         // If `params` have a width or height parameter then the
         // srcset to be constructed with these params _is dpr based
