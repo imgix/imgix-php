@@ -157,7 +157,7 @@ class UrlBuilder
         $hasHeight = $params['h'] ?? null;
 
         // If `params` have a width or height parameter then the
-        // srcset to be constructed with these params _is dpr based
+        // srcset to be constructed with these params _is_ dpr based.
         return $hasWidth || $hasHeight;
     }
 
