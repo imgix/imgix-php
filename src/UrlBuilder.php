@@ -15,11 +15,15 @@ class UrlBuilder
         3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192,
     ];
 
-    // define class constants
-    // should be private; but visibility modifiers are not supported php version <7.1
     public const TARGET_RATIOS = [1, 2, 3, 4, 5];
 
-    public const DPR_QUALITIES = [1 => 75, 2 => 50, 3 => 35, 4 => 23, 5 => 20];
+    public const DPR_QUALITIES = [
+        1 => 75,
+        2 => 50,
+        3 => 35,
+        4 => 23,
+        5 => 20,
+    ];
 
     public const MIN_WIDTH = 100;
 
