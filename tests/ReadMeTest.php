@@ -7,11 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 class ReadMeTest extends TestCase
 {
-    private const HOST = 'demos.imgix.net';
+    public const HOST = 'demos.imgix.net';
 
     public function testFixedWidthImages()
     {
         $builder = new UrlBuilder(self::HOST, true, 'my-key', false);
+
         $actual = $builder->createSrcSet('image.png', ['h' => 800, 'ar' => '3:2', 'fit' => 'crop']);
         $expected =
 'https://demos.imgix.net/image.png?ar=3%3A2&dpr=1&fit=crop&h=800&q=75&s=b6b4a327a9e5a9ce5c9251b736c98633 1x,
@@ -25,7 +26,7 @@ https://demos.imgix.net/image.png?ar=3%3A2&dpr=5&fit=crop&h=800&q=20&s=f010a3d00
 
     public function testFixedWidthVariableQualityEnabled()
     {
-        $builder = new UrlBuilder(self::HOST, true, '', false);
+        $builder = new UrlBuilder(self::HOST, includeLibraryParam: false);
         $actual = $builder->createSrcSet('image.jpg', ['w' => 100]);
 
         $expected =
@@ -40,7 +41,7 @@ https://demos.imgix.net/image.jpg?dpr=5&q=20&w=100 5x';
 
     public function testFluidWidthCustomWidths()
     {
-        $builder = new UrlBuilder(self::HOST, true, '', false);
+        $builder = new UrlBuilder(self::HOST, includeLibraryParam: false);
 
         $actual = $builder->createSrcSet('image.jpg', [], ['widths' => [144, 240, 320, 446, 640]]);
         $expected =
@@ -56,7 +57,7 @@ https://demos.imgix.net/image.jpg?w=640 640w';
     public function testFluidWidthRanges()
     {
         // Now test custom tolerances (also within a range).
-        $builder = new UrlBuilder(self::HOST, true, '', false);
+        $builder = new UrlBuilder(self::HOST, includeLibraryParam: false);
 
         $actual = $builder->createSrcSet('image.jpg', [], ['start' => 500, 'stop' => 2000]);
         $expected =
@@ -77,7 +78,7 @@ https://demos.imgix.net/image.jpg?w=2000 2000w';
 
     public function testFluidWidthRangesTolerance()
     {
-        $builder = new UrlBuilder(self::HOST, true, '', false);
+        $builder = new UrlBuilder(self::HOST, includeLibraryParam: false);
 
         $actual = $builder->createSrcSet('image.jpg', [], ['start' => 100, 'stop' => 384, 'tol' => 0.20]);
         $expected =
