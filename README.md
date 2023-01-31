@@ -41,9 +41,8 @@ images on the domains it is provided.
 ```php
 use Imgix\UrlBuilder;
 
-$builder = new UrlBuilder("demos.imgix.net");
-$params = array("w" => 100, "h" => 100);
-echo $builder->createURL("bridge.png", $params);
+$builder = new UrlBuilder('demos.imgix.net');
+echo $builder->createURL('bridge.png', ['w' => 100, 'h' => 100]);
 // 'https://demos.imgix.net/bridge.png?h=100&w=100'
 ```
 
@@ -52,10 +51,9 @@ HTTPS support is available _by default_. However, if you need HTTP support, call
 ```php
 use Imgix\UrlBuilder;
 
-$builder = new UrlBuilder("demos.imgix.net");
+$builder = new UrlBuilder('demos.imgix.net');
 $builder->setUseHttps(false);
-$params = array("w" => 100, "h" => 100);
-echo $builder->createURL("bridge.png", $params);
+echo $builder->createURL('bridge.png', ['w' => 100, 'h' => 100]);
 // 'http://demos.imgix.net/bridge.png?h=100&w=100'
 ```
 
@@ -67,11 +65,10 @@ provide your signature key to the URL builder.
 ```php
 use Imgix\UrlBuilder;
 
-$builder = new UrlBuilder("demos.imgix.net");
-$builder->setSignKey("test1234");
-$params = array("w" => 100, "h" => 100);
-echo $builder->createURL("bridge.png", $params);
-// 'http://demos.imgix.net/bridge.png?h=100&w=100&s=bb8f3a2ab832e35997456823272103a4'
+$builder = new UrlBuilder('demos.imgix.net');
+$builder->setSignKey('test1234');
+echo $builder->createURL("bridge.png", ['w' => 100, 'h' => 100]);
+// 'https://demos.imgix.net/bridge.png?h=100&w=100&s=bb8f3a2ab832e35997456823272103a4'
 ```
 
 ## Srcset Generation
@@ -79,8 +76,8 @@ echo $builder->createURL("bridge.png", $params);
 The imgix-php package allows for generation of custom srcset attributes, which can be invoked through the `createSrcSet` method. By default, the generated srcset will allow for responsive size switching by building a list of image-width mappings.
 
 ```php
-$builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-echo $builder->createSrcSet("image.png");
+$builder = new UrlBuilder('demos.imgix.net', true, 'my-key', false);
+echo $builder->createSrcSet('image.png');
 ```
 
 The above will produce the following srcset attribute value which can then be served to the client:
@@ -101,18 +98,18 @@ In cases where enough information is provided about an image's dimensions, `crea
 By invoking `createSrcSet` with either a width **or** height provided, a different srcset will be generated for a fixed-width image instead.
 
 ```php
-$builder = new UrlBuilder("demos.imgix.net", true, "my-key", false);
-echo $builder->createSrcSet("image.png", array("h"=>800, "ar"=>"3:2", "fit"=>"crop"));
+$builder = new UrlBuilder('demos.imgix.net', true, 'my-key', false);
+echo $builder->createSrcSet('image.png', ['h' => 800, 'ar' => '3:2', 'fit' => 'crop']);
 ```
 
 Will produce the following attribute value:
 
 ``` html
-https://demos.imgix.net/image.png?ar=3%3A2&dpr=1&fit=crop&h=800&s=6cf5c443d1eb98bc3d96ea569fcef088 1x,
-https://demos.imgix.net/image.png?ar=3%3A2&dpr=2&fit=crop&h=800&s=d60a61a5f34545922bd8dff4e53a0555 2x,
-https://demos.imgix.net/image.png?ar=3%3A2&dpr=3&fit=crop&h=800&s=590f96aa426f8589eb7e449ebbeb66e7 3x,
-https://demos.imgix.net/image.png?ar=3%3A2&dpr=4&fit=crop&h=800&s=c89c2fd3148957647e86cfc32ba20517 4x,
-https://demos.imgix.net/image.png?ar=3%3A2&dpr=5&fit=crop&h=800&s=3d73af69d78d49eef0f81b4b5d718a2c 5x
+https://demos.imgix.net/image.png?ar=3%3A2&dpr=1&fit=crop&h=800&q=75&s=b6b4a327a9e5a9ce5c9251b736c98633 1x,
+https://demos.imgix.net/image.png?ar=3%3A2&dpr=2&fit=crop&h=800&q=50&s=4f96c2dffa682c081ba9b994c49222cc 2x,
+https://demos.imgix.net/image.png?ar=3%3A2&dpr=3&fit=crop&h=800&q=35&s=7b2a069e769cfeaf9e6dbb4679aea2bc 3x,
+https://demos.imgix.net/image.png?ar=3%3A2&dpr=4&fit=crop&h=800&q=23&s=af185a51455a8e97025728b8f303e038 4x,
+https://demos.imgix.net/image.png?ar=3%3A2&dpr=5&fit=crop&h=800&q=20&s=f010a3d00e54153a36d3c27d9317bf8b 5x
 ```
 
 For more information to better understand srcset, we highly recommend
@@ -129,11 +126,10 @@ This behavior will respect any overriding `q` value passed in as a parameter. Ad
 This behavior specifically occurs when a [fixed-width image](#fixed-width-images) is rendered, for example:
 
 ```php
-// Note that `params=array("w" => 100)` allows `createSrcSet` to _infer_ the creation
+// Note that `['w' => 100]` allows `createSrcSet` to _infer_ the creation
 // of a DPR based srcset attribute for fixed-width images.
-$builder = new UrlBuilder("demos.imgix.net", true, "", false);
-$params = array("w" => 100);
-$srcset = $builder->createSrcSet($path="image.jpg", $params=$params);
+$builder = new UrlBuilder('demos.imgix.net', true, '', false);
+$srcset = $builder->createSrcSet('image.jpg', ['w' => 100]);
 ```
 
 The above will generate a srcset with the following `q` to `dpr` query `params`:
@@ -143,7 +139,7 @@ https://demos.imgix.net/image.jpg?dpr=1&q=75&w=100 1x,
 https://demos.imgix.net/image.jpg?dpr=2&q=50&w=100 2x,
 https://demos.imgix.net/image.jpg?dpr=3&q=35&w=100 3x,
 https://demos.imgix.net/image.jpg?dpr=4&q=23&w=100 4x,
-https://demos.imgix.net/image.jpg?dpr=5&q=20&w=100 5x'
+https://demos.imgix.net/image.jpg?dpr=5&q=20&w=100 5x
 ```
 
 ### Fluid-Width Images
@@ -153,9 +149,8 @@ https://demos.imgix.net/image.jpg?dpr=5&q=20&w=100 5x'
 In situations where specific widths are desired when generating `srcset` pairs, a user can specify them by passing an array of positive integers as `'widths'` within the `$options` array:
 
 ``` php
-$builder = new UrlBuilder("demos.imgix.net", true, "", false);
-$opts = array('widths' => array(144, 240, 320, 446, 640));
-$srcset = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
+$builder = new UrlBuilder('demos.imgix.net', true, '', false);
+$srcset = $builder->createSrcSet('image.jpg', [], ['widths' => [144, 240, 320, 446, 640]]);
 ```
 
 ```html
@@ -175,25 +170,24 @@ Additionally, if both `widths` and a width `tol`erance are passed to the `create
 In certain circumstances, you may want to limit the minimum or maximum value of the non-fixed `srcset` generated by the `createSrcSet` method. To do this, you can specify the widths at which a srcset should `start` and `stop`:
 
 ```php
-$builder = new UrlBuilder("demo.imgix.net", true, "", false);
-$opts = array('start' => 500, 'stop' => 2000);
-$srcset = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
+$builder = new UrlBuilder('demos.imgix.net', true, '', false);
+$srcset = $builder->createSrcSet('image.jpg', [], ['start' => 500, 'stop' => 2000]);
 ```
 
 Formatted version of the above srcset attribute:
 
 ``` html
-https://demo.imgix.net/image.jpg?w=500 500w,
-https://demo.imgix.net/image.jpg?w=580 580w,
-https://demo.imgix.net/image.jpg?w=673 673w,
-https://demo.imgix.net/image.jpg?w=780 780w,
-https://demo.imgix.net/image.jpg?w=905 905w,
-https://demo.imgix.net/image.jpg?w=1050 1050w,
-https://demo.imgix.net/image.jpg?w=1218 1218w,
-https://demo.imgix.net/image.jpg?w=1413 1413w,
-https://demo.imgix.net/image.jpg?w=1639 1639w,
-https://demo.imgix.net/image.jpg?w=1901 1901w,
-https://demo.imgix.net/image.jpg?w=2000 2000w
+https://demos.imgix.net/image.jpg?w=500 500w,
+https://demos.imgix.net/image.jpg?w=580 580w,
+https://demos.imgix.net/image.jpg?w=673 673w,
+https://demos.imgix.net/image.jpg?w=780 780w,
+https://demos.imgix.net/image.jpg?w=905 905w,
+https://demos.imgix.net/image.jpg?w=1050 1050w,
+https://demos.imgix.net/image.jpg?w=1218 1218w,
+https://demos.imgix.net/image.jpg?w=1413 1413w,
+https://demos.imgix.net/image.jpg?w=1639 1639w,
+https://demos.imgix.net/image.jpg?w=1901 1901w,
+https://demos.imgix.net/image.jpg?w=2000 2000w
 ```
 
 #### Width Tolerance
@@ -207,32 +201,32 @@ A lower tolerance means images will render closer to their native size (thereby 
 By default, srcset width `tol`erance is set to 8 percent, which we consider to be the ideal rate for maximizing cache hits without sacrificing visual quality. Users can specify their own width tolerance by providing a positive scalar value as width `tol`erance:
 
 ```php
-$builder = new UrlBuilder("demo.imgix.net", true, "", false);
-$opts = array('start' => 100, 'stop' => 384, 'tol' => 0.20);
-$srcset = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
+$builder = new UrlBuilder('demos.imgix.net', true, '', false);
+$srcset = $builder->createSrcSet('image.jpg', [], ['start' => 100, 'stop' => 384, 'tol' => 0.20]);
 ```
 
 In this case, the width `tol`erance is set to 20 percent, which will be reflected in the difference between subsequent widths in a srcset pair:
 
 ```html
-https://demo.imgix.net/image.jpg?w=100 100w,
-https://demo.imgix.net/image.jpg?w=140 140w,
-https://demo.imgix.net/image.jpg?w=196 196w,
-https://demo.imgix.net/image.jpg?w=274 274w,
-https://demo.imgix.net/image.jpg?w=384 384w
+https://demos.imgix.net/image.jpg?w=100 100w,
+https://demos.imgix.net/image.jpg?w=140 140w,
+https://demos.imgix.net/image.jpg?w=196 196w,
+https://demos.imgix.net/image.jpg?w=274 274w,
+https://demos.imgix.net/image.jpg?w=384 384w
 ```
 
 ## The `ixlib` Parameter
 
 For security and diagnostic purposes, we sign all requests with the language and version of library used to generate the URL.
 
-This can be disabled by setting `setIncludeLibraryParam` to `False` like so:
+This can be disabled by setting `setIncludeLibraryParam` to `false` like so:
 
 ``` php
-$builder = new UrlBuilder("demo.imgix.net", true, "", false);
-// Or by calling `setIncludeLibraryParam`
+$builder = new UrlBuilder('demos.imgix.net', true, '', false);
+// Or by calling `setIncludeLibraryParam()`
 $builder->setIncludeLibraryParam(false);
 ```
 
 ## License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fimgix-php?ref=badge_large)
