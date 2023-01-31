@@ -80,31 +80,26 @@ class UrlBuilder
 
     public function createSrcSet($path, $params = [], $options = [])
     {
-        $widthsArray = isset($options['widths']) ? $options['widths'] : null;
+        $widthsArray = $options['widths'] ?? null;
 
-        if (isset($widthsArray)) {
+        if (! is_null($widthsArray)) {
             Validator::validateWidths($widthsArray);
 
-            return $this->createSrcSetPairs($path, $params = $params, $widthsArray);
+            return $this->createSrcSetPairs($path, $params, $widthsArray);
         }
-
-        $_start = isset($options['start']) ? $options['start'] : self::MIN_WIDTH;
-        $_stop = isset($options['stop']) ? $options['stop'] : self::MAX_WIDTH;
-        $_tol = isset($options['tol']) ? $options['tol'] : self::SRCSET_WIDTH_TOLERANCE;
-        $_disableVariableQuality = isset($options['disableVariableQuality'])
-                ? $options['disableVariableQuality'] : false;
 
         if ($this->isDpr($params)) {
-            return $this->createDPRSrcSet(
-                $path = $path,
-                $params = $params,
-                $disableVariableQuality = $_disableVariableQuality
-            );
-        } else {
-            $targets = $this->targetWidths($start = $_start, $stop = $_stop, $tol = $_tol);
+            $disableVariableQuality = $options['disableVariableQuality'] ?? false;
 
-            return $this->createSrcSetPairs($path, $params = $params, $targets = $targets);
+            return $this->createDPRSrcSet($path, $params, $disableVariableQuality);
         }
+
+        $start = $options['start'] ?? self::MIN_WIDTH;
+        $stop = $options['stop'] ?? self::MAX_WIDTH;
+        $tol = $options['tol'] ?? self::SRCSET_WIDTH_TOLERANCE;
+        $targets = $this->targetWidths($start, $stop, $tol);
+
+        return $this->createSrcSetPairs($path, $params, $targets);
     }
 
     /**
