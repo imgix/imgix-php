@@ -2,6 +2,8 @@
 
 namespace Imgix;
 
+use InvalidArgumentException;
+
 class Validator
 {
     public const ONE_PERCENT = 0.01;
@@ -9,14 +11,14 @@ class Validator
     public static function validateMinWidth($start)
     {
         if ($start < 0) {
-            throw new \InvalidArgumentException('`start` width value must be greater than zero');
+            throw new InvalidArgumentException('`start` width value must be greater than zero');
         }
     }
 
     public static function validateMaxWidth($stop)
     {
-            throw new \InvalidArgumentException('`stop` width value must be greater than zero');
         if ($stop < 0) {
+            throw new InvalidArgumentException('`stop` width value must be greater than zero');
         }
     }
 
@@ -29,7 +31,7 @@ class Validator
 
         // Ensure that the range is valid, ie. `start <= stop`.
         if ($start > $stop) {
-            throw new \InvalidArgumentException('`start` width value must be less than `stop` width value');
+            throw new InvalidArgumentException('`start` width value must be less than `stop` width value');
         }
     }
 
@@ -38,7 +40,7 @@ class Validator
         $msg = '`tol`erance value must be greater than, or equal to one percent, ie. >= 0.01';
 
         if ($tol < self::ONE_PERCENT) {
-            throw new \InvalidArgumentException($msg);
+            throw new InvalidArgumentException($msg);
         }
     }
 
@@ -51,15 +53,15 @@ class Validator
     public static function validateWidths($widths)
     {
         if (is_null($widths)) {
-            throw new \InvalidArgumentException("`widths` array cannot be `null`");
+            throw new InvalidArgumentException('`widths` array cannot be `null`');
         }
 
         if (count($widths) === 0) {
-            throw new \InvalidArgumentException("`widths` array cannot be empty");
+            throw new InvalidArgumentException('`widths` array cannot be empty');
         }
         foreach ($widths as &$w) {
             if ($w < 0) {
-                throw new \InvalidArgumentException('width values in `widths` cannot be negative');
+                throw new InvalidArgumentException('width values in `widths` cannot be negative');
             }
         }
     }

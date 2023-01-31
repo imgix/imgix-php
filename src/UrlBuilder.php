@@ -2,6 +2,8 @@
 
 namespace Imgix;
 
+use InvalidArgumentException;
+
 class UrlBuilder
 {
     private $currentVersion = "4.1.0";
@@ -34,7 +36,7 @@ class UrlBuilder
     public function __construct($domain, $useHttps = true, $signKey = '', $includeLibraryParam = true)
     {
         if (! is_string($domain)) {
-            throw new \InvalidArgumentException('UrlBuilder must be passed a string domain');
+            throw new InvalidArgumentException('UrlBuilder must be passed a string domain');
         }
 
         $this->domain = $domain;
@@ -50,9 +52,7 @@ class UrlBuilder
         $DOMAIN_PATTERN = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
 
         if (! preg_match($DOMAIN_PATTERN, $domain)) {
-            throw new \InvalidArgumentException('Domain must be passed in as fully-qualified '.
-            'domain name and should not include a protocol or any path element, i.e. '.
-            '"example.imgix.net".');
+            throw new InvalidArgumentException('Domain must be passed in as fully-qualified domain name and should not include a protocol or any path element, i.e. "example.imgix.net".');
         }
     }
 
