@@ -6,7 +6,6 @@ use InvalidArgumentException;
 
 class UrlBuilder
 {
-    private $currentVersion = "4.1.0";
     private $domain;
 
     private $useHttps;
@@ -14,6 +13,7 @@ class UrlBuilder
     private $signKey;
 
     private $includeLibraryParam = true;
+    public const VERSION = '4.1.0';
 
     public const TARGET_WIDTHS = [
         100, 116, 134, 156, 182, 210, 244, 282,
@@ -78,7 +78,7 @@ class UrlBuilder
         $domain = $this->domain;
 
         if ($this->includeLibraryParam) {
-            $params['ixlib'] = 'php-'.$this->currentVersion;
+            $params['ixlib'] = 'php-'.static::VERSION;
         }
 
         $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);

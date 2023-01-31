@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class UrlBuilderTest extends TestCase
 {
-    public const PACKAGE_VERSION = '4.1.0';
     public const TARGET_WIDTHS = [
         100, 116, 135, 156, 181, 210, 244, 283,
         328, 380, 441, 512, 594, 689, 799, 927,
@@ -138,7 +137,7 @@ class UrlBuilderTest extends TestCase
         $builder = new UrlBuilder('demos.imgix.net', true);
         $url = $builder->createUrl('https://my-demo-site.com/files/133467012/avatar icon.png?some=chill&params=1');
 
-        $this->assertEquals('https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-'. self::PACKAGE_VERSION, $url);
+        $this->assertEquals('https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-'.UrlBuilder::VERSION, $url);
     }
 
     public function testNestedParameters()
@@ -239,10 +238,10 @@ class UrlBuilderTest extends TestCase
     public function testCustomSrcsetPairs()
     {
         // Test custom srcset pairs within ranges.
-        $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-'. self::PACKAGE_VERSION . '&w=328 328w';
         $builder = new UrlBuilder('demos.imgix.net', true, false);
         $opts = ['start' => 328, 'stop' => 328];
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = [], $options = $opts);
+        $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=328 328w';
         $this->assertEquals($expected, $actual);
 
         $builder = new UrlBuilder('demos.imgix.net', true, false);
@@ -251,15 +250,15 @@ class UrlBuilderTest extends TestCase
             $params = [],
             $options = ['start' => 720, 'stop' => 720]
         );
-        $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=720 720w';
+        $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=720 720w';
         $this->assertEquals($expected, $actual);
 
         $builder = new UrlBuilder('demos.imgix.net', true, false);
         $opts = ['start' => 640, 'stop' => 720];
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = [], $options = $opts);
         $expected = // Raw string literal
-'https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=640 640w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=720 720w';
+'https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=640 640w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=720 720w';
 
         $this->assertEquals($expected, $actual);
 
@@ -268,11 +267,11 @@ https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=720 
         $opts = ['start' => 100, 'stop' => 108, 'tol' => 0.01];
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = [], $options = $opts);
         $expected = // Raw string literal
-'https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=100 100w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=102 102w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=104 104w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=106 106w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=108 108w';
+'https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=100 100w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=102 102w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=104 104w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=106 106w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=108 108w';
 
         $this->assertEquals($expected, $actual);
     }
@@ -322,11 +321,11 @@ https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION . '&w=108 
             $params = ['w' => 640, 'q' => 100]
         );
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-' . self::PACKAGE_VERSION .'&q=100&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-' . self::PACKAGE_VERSION .'&q=100&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-' . self::PACKAGE_VERSION .'&q=100&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-' . self::PACKAGE_VERSION .'&q=100&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION .'&q=100&w=640 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-'.UrlBuilder::VERSION.'&q=100&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-'.UrlBuilder::VERSION.'&q=100&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-'.UrlBuilder::VERSION.'&q=100&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-'.UrlBuilder::VERSION.'&q=100&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-'.UrlBuilder::VERSION.'&q=100&w=640 5x';
         $this->assertEquals($expected, $actual);
     }
 
@@ -336,11 +335,11 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION .'&q
         $builder = new UrlBuilder('demos.imgix.net', true, false);
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = ['w' => 740]);
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=740 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-' . self::PACKAGE_VERSION . '&q=50&w=740 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-' . self::PACKAGE_VERSION . '&q=35&w=740 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-' . self::PACKAGE_VERSION . '&q=23&w=740 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&q=20&w=740 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=740 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-'.UrlBuilder::VERSION.'&q=50&w=740 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-'.UrlBuilder::VERSION.'&q=35&w=740 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-'.UrlBuilder::VERSION.'&q=23&w=740 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-'.UrlBuilder::VERSION.'&q=20&w=740 5x';
         $this->assertEquals($expected, $actual);
     }
 
@@ -352,11 +351,11 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&
         $opts = ['disableVariableQuality' => true];
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = $params, $opts = $opts);
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-' . self::PACKAGE_VERSION . '&w=640 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-' . self::PACKAGE_VERSION . '&w=640 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-' . self::PACKAGE_VERSION . '&w=640 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-' . self::PACKAGE_VERSION . '&w=640 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&w=640 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-'.UrlBuilder::VERSION.'&w=640 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-'.UrlBuilder::VERSION.'&w=640 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-'.UrlBuilder::VERSION.'&w=640 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-'.UrlBuilder::VERSION.'&w=640 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-'.UrlBuilder::VERSION.'&w=640 5x';
         $this->assertEquals($expected, $actual);
     }
 
@@ -369,11 +368,11 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&
         $opts = ['disableVariableQuality' => false]; // Enabled.
         $actual = $builder->createSrcSet($path = 'image.jpg', $params, $opts);
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=540 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=540 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=540 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=540 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&q=75&w=540 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=540 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=540 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=540 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=540 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-'.UrlBuilder::VERSION.'&q=75&w=540 5x';
         $this->assertEquals($expected, $actual);
     }
 
@@ -388,11 +387,11 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION . '&
             $options = $opts
         );
         $expected =
-'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-' . self::PACKAGE_VERSION .'&q=99&w=440 1x,
-https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-' . self::PACKAGE_VERSION .'&q=99&w=440 2x,
-https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-' . self::PACKAGE_VERSION .'&q=99&w=440 3x,
-https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-' . self::PACKAGE_VERSION .'&q=99&w=440 4x,
-https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION .'&q=99&w=440 5x';
+'https://demos.imgix.net/image.jpg?dpr=1&ixlib=php-'.UrlBuilder::VERSION.'&q=99&w=440 1x,
+https://demos.imgix.net/image.jpg?dpr=2&ixlib=php-'.UrlBuilder::VERSION.'&q=99&w=440 2x,
+https://demos.imgix.net/image.jpg?dpr=3&ixlib=php-'.UrlBuilder::VERSION.'&q=99&w=440 3x,
+https://demos.imgix.net/image.jpg?dpr=4&ixlib=php-'.UrlBuilder::VERSION.'&q=99&w=440 4x,
+https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-'.UrlBuilder::VERSION.'&q=99&w=440 5x';
         $this->assertEquals($expected, $actual);
     }
 
@@ -402,11 +401,11 @@ https://demos.imgix.net/image.jpg?dpr=5&ixlib=php-' . self::PACKAGE_VERSION .'&q
         $opts = ['widths' => [100, 200, 303, 404, 535]];
         $actual = $builder->createSrcSet($path = 'image.jpg', $params = [], $options = $opts);
         $expected =
-'https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=100 100w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=200 200w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=303 303w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=404 404w,
-https://demos.imgix.net/image.jpg?ixlib=php-' . self::PACKAGE_VERSION .'&w=535 535w';
+'https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=100 100w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=200 200w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=303 303w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=404 404w,
+https://demos.imgix.net/image.jpg?ixlib=php-'.UrlBuilder::VERSION.'&w=535 535w';
 
         $this->assertEquals($expected, $actual);
     }
