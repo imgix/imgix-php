@@ -67,13 +67,12 @@ class UrlBuilder
     public function createURL($path, $params = [])
     {
         $scheme = $this->useHttps ? 'https' : 'http';
-        $domain = $this->domain;
 
         if ($this->includeLibraryParam) {
             $params['ixlib'] = 'php-'.static::VERSION;
         }
 
-        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
+        $uh = new UrlHelper($this->domain, $path, $scheme, $this->signKey, $params);
 
         return $uh->getURL();
     }
