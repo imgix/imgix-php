@@ -13,7 +13,8 @@ class UrlBuilderTest extends TestCase
         100, 116, 135, 156, 181, 210, 244, 283,
         328, 380, 441, 512, 594, 689, 799, 927,
         1075, 1247, 1446, 1678, 1946, 2257, 2619,
-        3038, 3524, 4087, 4741, 5500, 6380, 7401, 8192];
+        3038, 3524, 4087, 4741, 5500, 6380, 7401, 8192,
+    ];
 
     public function testURLBuilderRaisesExceptionOnNoDomain()
     {
@@ -239,10 +240,10 @@ class UrlBuilderTest extends TestCase
     public function testCustomSrcsetPairs()
     {
         // Test custom srcset pairs within ranges.
-        $builder = new UrlBuilder("demos.imgix.net", true, false);
-        $opts = array('start' => 328, 'stop' => 328);
-        $actual = $builder->createSrcSet($path="image.jpg", $params=array(), $options=$opts);
         $expected = 'https://demos.imgix.net/image.jpg?ixlib=php-'. self::PACKAGE_VERSION . '&w=328 328w';
+        $builder = new UrlBuilder('demos.imgix.net', true, false);
+        $opts = ['start' => 328, 'stop' => 328];
+        $actual = $builder->createSrcSet($path = 'image.jpg', $params = [], $options = $opts);
         $this->assertEquals($expected, $actual);
 
         $builder = new UrlBuilder('demos.imgix.net', true, false);

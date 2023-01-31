@@ -19,7 +19,8 @@ class UrlBuilder
         100, 116, 134, 156, 182, 210, 244, 282,
         328, 380, 442, 512, 594, 688, 798, 926,
         1074, 1246, 1446, 1678, 1946, 2258, 2618,
-        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192];
+        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192,
+    ];
 
     // define class constants
     // should be private; but visibility modifiers are not supported php version <7.1
@@ -133,12 +134,12 @@ class UrlBuilder
      * @return int[] $resolutions An array of integer values.
      */
     public function targetWidths(
-        $start=self::MIN_WIDTH,
-        $stop=self::MAX_WIDTH,
-        $tol=self::SRCSET_WIDTH_TOLERANCE
+        $start = self::MIN_WIDTH,
+        $stop = self::MAX_WIDTH,
+        $tol = self::SRCSET_WIDTH_TOLERANCE
     ) {
         if ($start === $stop) {
-            return array((int) $start);
+            return [(int) $start];
         }
 
         Validator::validateMinMaxTol($start, $stop, $tol);
