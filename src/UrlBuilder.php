@@ -56,14 +56,14 @@ class UrlBuilder
         }
     }
 
-    public function setSignKey($key)
-    {
-        $this->signKey = $key;
-    }
-
     public function setUseHttps($useHttps)
     {
         $this->useHttps = $useHttps;
+    }
+
+    public function setSignKey($key)
+    {
+        $this->signKey = $key;
     }
 
     public function setIncludeLibraryParam($includeLibraryParam)
