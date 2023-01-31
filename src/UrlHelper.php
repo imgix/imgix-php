@@ -4,23 +4,14 @@ namespace Imgix;
 
 class UrlHelper
 {
-    private $domain;
-
-    private $path;
-
-    private $scheme;
-
-    private $signKey;
-
-    private $params;
-
-    public function __construct($domain, $path, $scheme = 'http', $signKey = '', $params = [])
-    {
-        $this->domain = $domain;
+    public function __construct(
+        private $domain,
+        private $path,
+        private $scheme = 'http',
+        private $signKey = '',
+        private $params = [],
+    ) {
         $this->path = $this->formatPath($path);
-        $this->scheme = $scheme;
-        $this->signKey = $signKey;
-        $this->params = $params;
     }
 
     public function formatPath($path)

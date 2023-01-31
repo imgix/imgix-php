@@ -6,13 +6,6 @@ use InvalidArgumentException;
 
 class UrlBuilder
 {
-    private $domain;
-
-    private $useHttps;
-
-    private $signKey;
-
-    private $includeLibraryParam = true;
     public const VERSION = '4.1.0';
 
     public const TARGET_WIDTHS = [
@@ -34,18 +27,17 @@ class UrlBuilder
 
     public const SRCSET_WIDTH_TOLERANCE = 0.08;
 
-    public function __construct($domain, $useHttps = true, $signKey = '', $includeLibraryParam = true)
-    {
+    public function __construct(
+        private $domain,
+        private $useHttps = true,
+        private $signKey = '',
+        private $includeLibraryParam = true,
+    ) {
         if (! is_string($domain)) {
             throw new InvalidArgumentException('UrlBuilder must be passed a string domain');
         }
 
-        $this->domain = $domain;
         $this->validateDomain($this->domain);
-
-        $this->useHttps = $useHttps;
-        $this->signKey = $signKey;
-        $this->includeLibraryParam = $includeLibraryParam;
     }
 
     private function validateDomain($domain)
