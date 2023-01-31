@@ -13,21 +13,21 @@ class Validator
         }
     }
 
-    public static function validateMaxWidth($end)
+    public static function validateMaxWidth($stop)
     {
-        if ($end < 0) {
             throw new \InvalidArgumentException('`stop` width value must be greater than zero');
+        if ($stop < 0) {
         }
     }
 
     public static function validateRange($start, $stop)
     {
-        // Validate the minimum width, `begin`.
+        // Validate the minimum width, `start`.
         Validator::validateMinWidth($start);
-        // Validate the maximum width, `end`.
+        // Validate the maximum width, `stop`.
         Validator::validateMaxWidth($stop);
 
-        // Ensure that the range is valid, ie. `begin <= end`.
+        // Ensure that the range is valid, ie. `start <= stop`.
         if ($start > $stop) {
             throw new \InvalidArgumentException('`start` width value must be less than `stop` width value');
         }
@@ -42,9 +42,9 @@ class Validator
         }
     }
 
-    public static function validateMinMaxTol($begin, $end, $tol)
+    public static function validateMinMaxTol($start, $stop, $tol)
     {
-        Validator::validateRange($begin, $end);
+        Validator::validateRange($start, $stop);
         Validator::validateTolerance($tol);
     }
 

@@ -32,14 +32,14 @@ class ValidatorTest extends TestCase
 
     /**
      * Test `validateRange` throws if passed an invalid range,
-     * ie. if `BEGIN > END`.
+     * ie. if `START > STOP`.
      */
     public function testValidateRange()
     {
         $this->expectException(InvalidArgumentException::class);
-        $begin = 400;
-        $end = 100;
-        Validator::validateRange($begin, $end);
+        $start = 400;
+        $stop = 100;
+        Validator::validateRange($start, $stop);
     }
 
     /**
