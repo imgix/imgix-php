@@ -137,7 +137,6 @@ class UrlBuilderTest extends TestCase
     {
         $builder = new UrlBuilder('demos.imgix.net', true);
         $url = $builder->createUrl('https://my-demo-site.com/files/133467012/avatar icon.png?some=chill&params=1');
-        // $composerFileJson = json_decode(file_get_contents('./composer.json'), true);
 
         $this->assertEquals('https://demos.imgix.net/https%3A%2F%2Fmy-demo-site.com%2Ffiles%2F133467012%2Favatar%20icon.png%3Fsome%3Dchill%26params%3D1?ixlib=php-'. self::PACKAGE_VERSION, $url);
     }

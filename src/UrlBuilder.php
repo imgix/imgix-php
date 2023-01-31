@@ -163,8 +163,7 @@ class UrlBuilder
     private function isDpr($params)
     {
         if (empty($params)) {
-            // If the params array is empty, then
-            // it is _not_ dpr based.
+            // If the params array is empty, then it is _not_ dpr based.
             return false;
         }
 
