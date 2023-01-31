@@ -164,38 +164,35 @@ class UrlBuilder
 
     private function createDPRSrcSet($path, $params, $disableVariableQuality = false)
     {
-        $srcset = '';
+        $srcset = [];
 
-        $size = count(self::TARGET_RATIOS);
-        for ($i = 0; $i < $size; $i++) {
+        foreach (self::DPR_QUALITIES as $dpr => $quality) {
             $currentParams = $params;
-            $currentParams['dpr'] = $i + 1;
-            $currentRatio = self::TARGET_RATIOS[$i];
+            $currentParams['dpr'] = $dpr;
+
             // If variable quality output has been disabled _and_
             // the `q` param _has not_ been passed:
             if (! $disableVariableQuality && ! isset($params['q'])) {
-                $currentParams['q'] = self::DPR_QUALITIES[$i + 1];
+                $currentParams['q'] = $quality;
             }
-            $srcset .= $this->createURL($path, $currentParams).' '.$currentRatio."x,\n";
+
+            $srcset[] = $this->createURL($path, $currentParams).' '.$dpr.'x';
         }
 
-        return substr($srcset, 0, strlen($srcset) - 2);
+        return implode(",\n", $srcset);
     }
 
     private function createSrcSetPairs($path, $params, $targets = self::TARGET_WIDTHS)
     {
-        $srcset = '';
-        $currentWidth = null;
-        $currentParams = null;
+        $srcset = [];
 
-        $size = count($targets);
-        for ($i = 0; $i < $size; $i++) {
-            $currentWidth = $targets[$i];
+        foreach ($targets as $currentWidth) {
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
-            $srcset .= $this->createURL($path, $currentParams).' '.$currentWidth."w,\n";
+
+            $srcset[] = $this->createURL($path, $currentParams).' '.$currentWidth.'w';
         }
 
-        return substr($srcset, 0, strlen($srcset) - 2);
+        return implode(",\n", $srcset);
     }
 }
