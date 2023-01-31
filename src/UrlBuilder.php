@@ -42,9 +42,9 @@ class UrlBuilder
 
     private function validateDomain($domain)
     {
-        $DOMAIN_PATTERN = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
+        $domainPattern = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
 
-        if (! preg_match($DOMAIN_PATTERN, $domain)) {
+        if (! preg_match($domainPattern, $domain)) {
             throw new InvalidArgumentException('Domain must be passed in as fully-qualified domain name and should not include a protocol or any path element, i.e. "example.imgix.net".');
         }
     }
