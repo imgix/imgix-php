@@ -2,28 +2,28 @@
 
 namespace Imgix;
 
+use InvalidArgumentException;
+
 class UrlBuilder
 {
-    private $currentVersion = "4.1.0";
-    private $domain;
-
-    private $useHttps;
-
-    private $signKey;
-
-    private $includeLibraryParam = true;
+    public const VERSION = '4.1.0';
 
     public const TARGET_WIDTHS = [
         100, 116, 134, 156, 182, 210, 244, 282,
         328, 380, 442, 512, 594, 688, 798, 926,
         1074, 1246, 1446, 1678, 1946, 2258, 2618,
-        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192];
+        3038, 3524, 4088, 4742, 5500, 6380, 7400, 8192,
+    ];
 
-    // define class constants
-    // should be private; but visibility modifiers are not supported php version <7.1
     public const TARGET_RATIOS = [1, 2, 3, 4, 5];
 
-    public const DPR_QUALITIES = [1 => 75, 2 => 50, 3 => 35, 4 => 23, 5 => 20];
+    public const DPR_QUALITIES = [
+        1 => 75,
+        2 => 50,
+        3 => 35,
+        4 => 23,
+        5 => 20,
+    ];
 
     public const MIN_WIDTH = 100;
 
@@ -31,39 +31,36 @@ class UrlBuilder
 
     public const SRCSET_WIDTH_TOLERANCE = 0.08;
 
-    public function __construct($domain, $useHttps = true, $signKey = '', $includeLibraryParam = true)
-    {
+    public function __construct(
+        private $domain,
+        private $useHttps = true,
+        private $signKey = '',
+        private $includeLibraryParam = true,
+    ) {
         if (! is_string($domain)) {
-            throw new \InvalidArgumentException('UrlBuilder must be passed a string domain');
+            throw new InvalidArgumentException('UrlBuilder must be passed a string domain');
         }
 
-        $this->domain = $domain;
         $this->validateDomain($this->domain);
-
-        $this->useHttps = $useHttps;
-        $this->signKey = $signKey;
-        $this->includeLibraryParam = $includeLibraryParam;
     }
 
     private function validateDomain($domain)
     {
-        $DOMAIN_PATTERN = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
+        $domainPattern = "/^(?:[a-z\d\-_]{1,62}\.){0,125}(?:[a-z\d](?:\-(?=\-*[a-z\d])|[a-z]|\d){0,62}\.)[a-z\d]{1,63}$/";
 
-        if (! preg_match($DOMAIN_PATTERN, $domain)) {
-            throw new \InvalidArgumentException('Domain must be passed in as fully-qualified '.
-            'domain name and should not include a protocol or any path element, i.e. '.
-            '"example.imgix.net".');
+        if (! preg_match($domainPattern, $domain)) {
+            throw new InvalidArgumentException('Domain must be passed in as fully-qualified domain name and should not include a protocol or any path element, i.e. "example.imgix.net".');
         }
-    }
-
-    public function setSignKey($key)
-    {
-        $this->signKey = $key;
     }
 
     public function setUseHttps($useHttps)
     {
         $this->useHttps = $useHttps;
+    }
+
+    public function setSignKey($key)
+    {
+        $this->signKey = $key;
     }
 
     public function setIncludeLibraryParam($includeLibraryParam)
@@ -74,44 +71,38 @@ class UrlBuilder
     public function createURL($path, $params = [])
     {
         $scheme = $this->useHttps ? 'https' : 'http';
-        $domain = $this->domain;
 
         if ($this->includeLibraryParam) {
-            $params['ixlib'] = 'php-'.$this->currentVersion;
+            $params['ixlib'] = 'php-'.static::VERSION;
         }
 
-        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
+        $uh = new UrlHelper($this->domain, $path, $scheme, $this->signKey, $params);
 
         return $uh->getURL();
     }
 
     public function createSrcSet($path, $params = [], $options = [])
     {
-        $widthsArray = isset($options['widths']) ? $options['widths'] : null;
+        $widthsArray = $options['widths'] ?? null;
 
-        if (isset($widthsArray)) {
+        if (! is_null($widthsArray)) {
             Validator::validateWidths($widthsArray);
 
-            return $this->createSrcSetPairs($path, $params = $params, $widthsArray);
+            return $this->createSrcSetPairs($path, $params, $widthsArray);
         }
-
-        $_start = isset($options['start']) ? $options['start'] : self::MIN_WIDTH;
-        $_stop = isset($options['stop']) ? $options['stop'] : self::MAX_WIDTH;
-        $_tol = isset($options['tol']) ? $options['tol'] : self::SRCSET_WIDTH_TOLERANCE;
-        $_disableVariableQuality = isset($options['disableVariableQuality'])
-                ? $options['disableVariableQuality'] : false;
 
         if ($this->isDpr($params)) {
-            return $this->createDPRSrcSet(
-                $path = $path,
-                $params = $params,
-                $disableVariableQuality = $_disableVariableQuality
-            );
-        } else {
-            $targets = $this->targetWidths($start = $_start, $stop = $_stop, $tol = $_tol);
+            $disableVariableQuality = $options['disableVariableQuality'] ?? false;
 
-            return $this->createSrcSetPairs($path, $params = $params, $targets = $targets);
+            return $this->createDPRSrcSet($path, $params, $disableVariableQuality);
         }
+
+        $start = $options['start'] ?? self::MIN_WIDTH;
+        $stop = $options['stop'] ?? self::MAX_WIDTH;
+        $tol = $options['tol'] ?? self::SRCSET_WIDTH_TOLERANCE;
+        $targets = $this->targetWidths($start, $stop, $tol);
+
+        return $this->createSrcSetPairs($path, $params, $targets);
     }
 
     /**
@@ -133,12 +124,12 @@ class UrlBuilder
      * @return int[] $resolutions An array of integer values.
      */
     public function targetWidths(
-        $start=self::MIN_WIDTH,
-        $stop=self::MAX_WIDTH,
-        $tol=self::SRCSET_WIDTH_TOLERANCE
+        $start = self::MIN_WIDTH,
+        $stop = self::MAX_WIDTH,
+        $tol = self::SRCSET_WIDTH_TOLERANCE
     ) {
         if ($start === $stop) {
-            return array((int) $start);
+            return [(int) $start];
         }
 
         Validator::validateMinMaxTol($start, $stop, $tol);
@@ -162,54 +153,49 @@ class UrlBuilder
     private function isDpr($params)
     {
         if (empty($params)) {
-            // If the params array is empty, then
-            // it is _not_ dpr based.
+            // If the params array is empty, then it is _not_ dpr based.
             return false;
         }
 
-        $hasWidth = array_key_exists('w', $params) ? $params['w'] : null;
-        $hasHeight = array_key_exists('h', $params) ? $params['h'] : null;
-        $hasAspectRatio = array_key_exists('ar', $params) ? $params['ar'] : null;
+        $hasWidth = $params['w'] ?? null;
+        $hasHeight = $params['h'] ?? null;
 
         // If `params` have a width or height parameter then the
-        // srcset to be constructed with these params _is dpr based
+        // srcset to be constructed with these params _is_ dpr based.
         return $hasWidth || $hasHeight;
     }
 
     private function createDPRSrcSet($path, $params, $disableVariableQuality = false)
     {
-        $srcset = '';
+        $srcset = [];
 
-        $size = count(self::TARGET_RATIOS);
-        for ($i = 0; $i < $size; $i++) {
+        foreach (self::DPR_QUALITIES as $dpr => $quality) {
             $currentParams = $params;
-            $currentParams['dpr'] = $i + 1;
-            $currentRatio = self::TARGET_RATIOS[$i];
+            $currentParams['dpr'] = $dpr;
+
             // If variable quality output has been disabled _and_
             // the `q` param _has not_ been passed:
             if (! $disableVariableQuality && ! isset($params['q'])) {
-                $currentParams['q'] = self::DPR_QUALITIES[$i + 1];
+                $currentParams['q'] = $quality;
             }
-            $srcset .= $this->createURL($path, $currentParams).' '.$currentRatio."x,\n";
+
+            $srcset[] = "{$this->createURL($path, $currentParams)} {$dpr}x";
         }
 
-        return substr($srcset, 0, strlen($srcset) - 2);
+        return implode(",\n", $srcset);
     }
 
     private function createSrcSetPairs($path, $params, $targets = self::TARGET_WIDTHS)
     {
-        $srcset = '';
-        $currentWidth = null;
-        $currentParams = null;
+        $srcset = [];
 
-        $size = count($targets);
-        for ($i = 0; $i < $size; $i++) {
-            $currentWidth = $targets[$i];
+        foreach ($targets as $currentWidth) {
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
-            $srcset .= $this->createURL($path, $currentParams).' '.$currentWidth."w,\n";
+
+            $srcset[] = "{$this->createURL($path, $currentParams)} {$currentWidth}w";
         }
 
-        return substr($srcset, 0, strlen($srcset) - 2);
+        return implode(",\n", $srcset);
     }
 }
