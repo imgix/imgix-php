@@ -179,7 +179,7 @@ class UrlBuilder
                 $currentParams['q'] = $quality;
             }
 
-            $srcset[] = $this->createURL($path, $currentParams).' '.$dpr.'x';
+            $srcset[] = "{$this->createURL($path, $currentParams)} {$dpr}x";
         }
 
         return implode(",\n", $srcset);
@@ -193,7 +193,7 @@ class UrlBuilder
             $currentParams = $params;
             $currentParams['w'] = $currentWidth;
 
-            $srcset[] = $this->createURL($path, $currentParams).' '.$currentWidth.'w';
+            $srcset[] = "{$this->createURL($path, $currentParams)} {$currentWidth}w";
         }
 
         return implode(",\n", $srcset);
