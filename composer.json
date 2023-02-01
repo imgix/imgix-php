@@ -28,6 +28,11 @@
             "Imgix\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "format": "vendor/bin/pint",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "@test --coverage-text"
+    },
     "config": {
         "sort-packages": true
     },
