@@ -2,7 +2,7 @@
 
 Thank you for investing your time in contributing to this project! Please take a moment to review this document in order to streamline the contribution process for you and any reviewers involved.
 
-Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
+Read our [Code of Conduct](CODE-OF-CONDUCT.md) to keep our community approachable and respectable.
 
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
