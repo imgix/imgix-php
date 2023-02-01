@@ -56,11 +56,9 @@ Commits should be in the format `<type>(<scope>): <description>`. This allows ou
 
 ### Example workflow
 
-Follow this process if you'd like your work considered for inclusion in the
-project:
+Follow this process if you'd like your work considered for inclusion in the project:
 
-1. [Fork](http://help.github.com/fork-a-repo/) the project, clone your fork,
-   and configure the remotes:
+1. [Fork](http://help.github.com/fork-a-repo/) the project, clone your fork, and configure the remotes:
 
    ```bash
    # Clone your fork of the repo into the current directory
@@ -78,16 +76,13 @@ project:
    git pull upstream <dev-branch>
    ```
 
-3. Create a new topic branch (off the main project development branch) to
-   contain your feature, change, or fix:
+3. Create a new topic branch (off the main project development branch) to contain your feature, change, or fix:
 
    ```bash
    git checkout -b <topic-branch-name>
    ```
 
-4. Commit your changes in logical chunks. Use Git's
-   [interactive rebase](https://help.github.com/articles/interactive-rebase)
-   feature to tidy up your commits before making them public.
+4. Commit your changes in logical chunks. Use Git's [interactive rebase](https://help.github.com/articles/interactive-rebase) feature to tidy up your commits before making them public.
 
 5. Locally merge (or rebase) the upstream development branch into your topic branch:
 
@@ -101,24 +96,22 @@ project:
    git push origin <topic-branch-name>
    ```
 
-7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
-   with a clear title and description.
+7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/) with a clear title and description.
 
-**IMPORTANT**: By submitting a patch, you agree to allow the project owner to
-license your work under the same license as that used by the project.
+**IMPORTANT**: By submitting a patch, you agree to allow the project owner to license your work under the same license as that used by the project.
 
-# Pre-requisites
+## Pre-requisites
 
 1. Check php is installed globally
 2. Install composer locally according to instructions here: https://getcomposer.org/download/
 
-# Install deps
+## Install deps
 
-Run `php composer.phar i` to install deps
+Run `php composer.phar install` to install deps
 
-# Development
+## Development
 
 Commands:
 
 - Run unit tests: `./vendor/bin/phpunit`
-- Update dependencies: `php composer.phar u`
+- Update dependencies: `php composer.phar update`
