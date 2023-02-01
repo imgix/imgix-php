@@ -113,5 +113,5 @@ Run `php composer.phar install` to install deps
 
 Commands:
 
-- Run unit tests: `./vendor/bin/phpunit`
+- Run unit tests: `php composer.phar run test`
 - Update dependencies: `php composer.phar update`
