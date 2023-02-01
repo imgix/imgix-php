@@ -1,27 +1,41 @@
 {
-  "name": "imgix/imgix-php",
-  "description": "A PHP client library for generating URLs with imgix.",
-  "type": "library",
-  "version": "4.1.0",
-  "license": "BSD-2-Clause",
-  "keywords": [
-    "imgix"
-  ],
-  "require": {
-    "php": "^8.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.4",
-    "phpunit/phpunit": "^9.5.10"
-  },
-  "autoload": {
-    "psr-4": {
-      "Imgix\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Imgix\\Tests\\": "tests/"
-    }
-  }
+    "name": "imgix/imgix-php",
+    "description": "A PHP client library for generating URLs with imgix.",
+    "type": "library",
+    "keywords": [
+        "imgix"
+    ],
+    "license": "BSD-2-Clause",
+    "homepage": "https://docs.imgix.com",
+    "support": {
+        "issues": "https://github.com/imgix/imgix-php/issues",
+        "source": "https://github.com/imgix/imgix-php"
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.4",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Imgix\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Imgix\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "format": "vendor/bin/pint",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "@test --coverage-text"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
