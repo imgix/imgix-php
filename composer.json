@@ -6,6 +6,11 @@
         "imgix"
     ],
     "license": "BSD-2-Clause",
+    "homepage": "https://docs.imgix.com",
+    "support": {
+        "issues": "https://github.com/imgix/imgix-php/issues",
+        "source": "https://github.com/imgix/imgix-php"
+    },
     "require": {
         "php": "^8.0"
     },
