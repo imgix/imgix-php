@@ -1,27 +1,27 @@
 {
-  "name": "imgix/imgix-php",
-  "description": "A PHP client library for generating URLs with imgix.",
-  "type": "library",
-  "version": "4.1.0",
-  "license": "BSD-2-Clause",
-  "keywords": [
-    "imgix"
-  ],
-  "require": {
-    "php": "^8.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.4",
-    "phpunit/phpunit": "^9.5.10"
-  },
-  "autoload": {
-    "psr-4": {
-      "Imgix\\": "src/"
+    "name": "imgix/imgix-php",
+    "description": "A PHP client library for generating URLs with imgix.",
+    "type": "library",
+    "version": "4.1.0",
+    "license": "BSD-2-Clause",
+    "keywords": [
+        "imgix"
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.4",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Imgix\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Imgix\\Tests\\": "tests/"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Imgix\\Tests\\": "tests/"
-    }
-  }
 }
