@@ -1,5 +1,5 @@
 <!-- ix-docs-ignore -->
-![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
+![imgix logo](https://assets.imgix.net/sdk-imgix-logo-new.svg)
 
 `imgix-php` is a client library for generating image URLs with [imgix](https://www.imgix.com/). It is tested under PHP versions `8.0`, `8.1` and `8.2`.
 
